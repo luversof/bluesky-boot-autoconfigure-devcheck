@@ -4,6 +4,7 @@ import javax.servlet.Servlet;
 
 import org.reflections.Reflections;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
@@ -21,6 +22,8 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckVi
 public class DevCheckServletAutoConfiguration {
 	
 	@Bean
+	@ConditionalOnMissingBean
+	@ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
 	public DevCheckViewController blueskyBootDevCheckViewController(ApplicationContext applicationContext) {
 		Reflections reflections = new Reflections();
 		String pathPrefix = "/";
