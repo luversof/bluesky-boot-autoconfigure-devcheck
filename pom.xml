@@ -31,7 +31,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 
 		<!-- (s) servlet web -->
 		<dependency>
@@ -45,6 +49,7 @@
 			<optional>true</optional>
 		</dependency>
 		<!-- (e) servlet web -->
+
 	</dependencies>
 
 	<inceptionYear>2021</inceptionYear>

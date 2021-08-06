@@ -32,7 +32,7 @@ import lombok.Data;
 
 @Controller
 @RequestMapping(value = "/_check")
-public class DevCheckViewController implements ApplicationContextAware {
+public class DevCheckThymeleafViewController implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
 	
@@ -40,7 +40,7 @@ public class DevCheckViewController implements ApplicationContextAware {
 	
 	private final String pathPrefix;
 	
-	public DevCheckViewController(Reflections reflections, String pathPrefix) {
+	public DevCheckThymeleafViewController(Reflections reflections, String pathPrefix) {
 		this.reflections = reflections;
 		this.pathPrefix = pathPrefix;
 	}
@@ -61,7 +61,7 @@ public class DevCheckViewController implements ApplicationContextAware {
 				devCheckInfoList.add(new DevCheckInfo(pathPrefix, map));
 			});
 		modelMap.addAttribute("devCheckInfoList", devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::getBeanName).thenComparing(devCheckInfo-> devCheckInfo.getUrlList().get(0))).collect(Collectors.toList()));
-		return "_check/index";
+		return "_check/thymeleaf/index";
 	}
 	
 	
@@ -69,7 +69,7 @@ public class DevCheckViewController implements ApplicationContextAware {
 	public static class DevCheckInfo {
 		
 		public DevCheckInfo(String pathPrefix, Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
-			this.beanName = handlerMethodMap.getValue().getBean().toString().replace("DevCheckController", "");
+			this.beanName = handlerMethodMap.getValue().getBean().toString()/* .replace("DevCheckController", "") */;
 			this.urlList = new ArrayList<>();
 			var patternsCondition = handlerMethodMap.getKey().getPatternsCondition();
 			if (patternsCondition != null) {
@@ -106,7 +106,7 @@ public class DevCheckViewController implements ApplicationContextAware {
 			}
 			
 		}
-		return "_check/util";
+		return "_check/thymeleaf/util";
 	}
 	
 	@Data
