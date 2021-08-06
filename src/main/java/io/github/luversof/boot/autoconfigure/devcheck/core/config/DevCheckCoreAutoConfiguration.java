@@ -4,9 +4,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-@Configuration("_blueskyDevCheckAutoConfiguration")
-@EnableConfigurationProperties(DevCheckProperties.class)
+@Configuration("_blueskyBootDevCheckCoreAutoConfiguration")
+@EnableConfigurationProperties(DevCheckCoreProperties.class)
 @PropertySource("classpath:dev-check.properties")
-public class DevCheckAutoConfiguration {
+// @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true")
+public class DevCheckCoreAutoConfiguration {
 
 }

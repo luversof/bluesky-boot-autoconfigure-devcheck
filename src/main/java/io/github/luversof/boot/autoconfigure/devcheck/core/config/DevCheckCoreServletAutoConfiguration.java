@@ -14,16 +14,16 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckThymeleafViewController;
 
-@Configuration(value = "_blueskyDevCheckServletAutoConfiguration", proxyBeanMethods = false)
+@Configuration(value = "_blueskyBootDevCheckCoreServletAutoConfiguration", proxyBeanMethods = false)
 @ConditionalOnClass({ Servlet.class, DispatcherServlet.class })
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true")
-public class DevCheckServletAutoConfiguration {
+public class DevCheckCoreServletAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
 	@ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
-	public DevCheckThymeleafViewController blueskyBootDevCheckThymeleafViewController(DevCheckProperties devCheckProperties) {
+	public DevCheckThymeleafViewController blueskyBootDevCheckThymeleafViewController(DevCheckCoreProperties devCheckProperties) {
 		Reflections reflections = new Reflections("io.github.luversof", devCheckProperties.getBasePackages());
 		String pathPrefix = "/";
 		return new DevCheckThymeleafViewController(reflections, pathPrefix);

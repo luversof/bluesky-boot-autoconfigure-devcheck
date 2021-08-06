@@ -50,6 +50,14 @@
 		</dependency>
 		<!-- (e) servlet web -->
 
+		<!-- (s) logging logback -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- (e) logging logback -->
+
 	</dependencies>
 
 	<inceptionYear>2021</inceptionYear>

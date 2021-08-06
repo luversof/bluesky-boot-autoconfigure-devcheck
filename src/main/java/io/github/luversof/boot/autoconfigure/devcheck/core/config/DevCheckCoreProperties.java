@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @ConfigurationProperties(prefix = "bluesky-boot.dev-check")
-public class DevCheckProperties {
+public class DevCheckCoreProperties {
 
 	private boolean enabled;
 	

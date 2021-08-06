@@ -1,4 +1,5 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckAutoConfiguration,\
-io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckServletAutoConfiguration
+io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreAutoConfiguration,\
+io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreServletAutoConfiguration,\
+io.github.luversof.boot.autoconfigure.devcheck.logging.logback.config.LogbackAutoConfiguration
