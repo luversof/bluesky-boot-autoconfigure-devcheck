@@ -47,10 +47,10 @@ bluesky-boot.dev-check.enabled=false
 ### DevCheckDescription annotation
 
 <!-- 
-_check page에서 해당 method에 대한 설명을 나타내기 위해 DevCheckDescription annotation을 사용합니다.
+'/_check' page에서 해당 method에 대한 설명을 나타내기 위해 DevCheckDescription annotation을 사용합니다.
 controller method와 utility static method에 사용할 수 있습니다.
 -->
-DevCheckDescription annotation is used to indicate the description of the method in the _check page.
+DevCheckDescription annotation is used to indicate the description of the method in the '/_check' page.
 Can be used for controller methods and utility static methods.
 
 | attribute  | description |
@@ -61,11 +61,11 @@ Can be used for controller methods and utility static methods.
 ### controller method
 
 <!-- 
-'*DevCheckController' 접미사와 'application/json' produce가 있는 모든 컨트롤러를 나열하고 표시합니다.
-다음과 같이 controller를 생성하고 확인하길 원하는 @GetMapping method를 만듭니다.
+bean name이 '*DevCheckController' 이고 produce가 'application/json' 인 모든 컨트롤러가 '/_check' page 목록화 대상입니다.
+다음과 같이 controller를 생성합니다.
  -->
-List and display all controllers with '*DevCheckController' suffix and 'application/json' produce.
-Create a controller and create a @GetMapping method that you want to check like this:
+All controllers with bean name of '*DevCheckController' and produce of 'application/json' are eligible for '/_check' page listing.
+Create a controller like this:
 
 ```java
 @RestController
@@ -99,10 +99,10 @@ The getMapping method of the controller is added to the '/_check' list as shown 
 ### utility static method
 
 <!--
-@DevCheckUtil annotation을 목록에 추가할 utility class에 선언합니다.
+'/_check/util' 목록에 추가할 utility class에 @DevCheckUtil annotation을 선언합니다.
 다음과 같이 사용합니다.
 -->
-Declare the @DevCheckUtil annotation in the utility class to add to the list.
+Declare @DevCheckUtil annotation in the utility class to be added to the '/_check/util' list.
 Use it like this:
 
 ```java
