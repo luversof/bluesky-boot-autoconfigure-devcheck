@@ -12,7 +12,7 @@ body { margin: 0; padding: 0;}
 .devcheck-container ul { width: 100%; margin: 0; padding: 0; list-style-type: none; display: table; font-size: 14px;}
 .devcheck-container li { margin: 0; padding: 10px; list-style-type: none; width: 100%; box-sizing: border-box; border-bottom: 1px solid #eaecef;}
 .devcheck-container .bean-name { display: table-cell; width: 300px;}
-.devcheck-container .value { display: table-cell; width: 80px; text-align: center;}
+.devcheck-container .value { display: table-cell; width: 120px; text-align: center;}
 .devcheck-container .url { display: table-cell ; padding: 0 0 0 20px;}
 .devcheck-container .link_blank { margin-left: 5px; vertical-align: middle; }
 .devcheck-container .thead { font-weight: bold; font-size: 18px; border-top: 5px solid #f4f5f7}
@@ -62,19 +62,19 @@ body { margin: 0; padding: 0;}
 </head>
 <body>
 <div class="devcheck-container">
-    <h2>DevCheck 목록</h2>
+    <h2>DevCheckController List</h2>
     
     <div>
-    	<a th:href="@{/_check/util}">유틸 목록 바로가기</a>
+    	<a th:href="@{/_check/util}">Go to Util static method List</a>
     </div>
     
     
-    <input type="text" id="devCheckSearchInput" autofocus class="devcheck-search" onkeyup="devCheckSearch()" placeholder="검색할 항목을 입력하세요." />
+    <input type="text" id="devCheckSearchInput" autofocus class="devcheck-search" onkeyup="devCheckSearch()" placeholder="Enter what you want to search for." />
     
     <ul>
         <li class="thead">
             <span class="bean-name">Controller</span>
-            <span class="value">Method</span>
+            <span class="value">HTTP Method</span>
             <span class="url">Link</span>
         </li>
         

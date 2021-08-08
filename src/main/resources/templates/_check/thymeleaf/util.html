@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" th:with="devCheckUtil = ${T(io.github.luversof.boot.autoconfigure.core.util.DevCheckUtil)}">
+<html xmlns:th="http://www.thymeleaf.org" th:with="devCheckUtil = ${T(io.github.luversof.boot.autoconfigure.devcheck.core.util.DevCheckUtil)}">
 <head>
 <meta charset="UTF-8">
 <style>
@@ -24,16 +24,16 @@ body { margin: 0; padding: 0;}
 </head>
 <body>
 <div class="util-container">
-    <h2>Util List</h2>
+    <h2>Util static method List</h2>
     
     <div>
-    	<a th:href="@{/_check}">DevCheck 목록 바로가기</a>
+    	<a th:href="@{/_check}">Go to DevCheck List</a>
     </div>
     
     <ul>
         <li class="thead">
-            <span class="method-name">유틸명</span>
-            <span class="method-description">사용</span>
+            <span class="method-name">Util name</span>
+            <span class="method-description">method</span>
         </li>
         
         <li class="tr" th:each="devCheckUtilInfo : ${devCheckUtilInfoList}" th:id="${devCheckUtilInfo.methodName}">

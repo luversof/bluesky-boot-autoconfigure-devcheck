@@ -13,9 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.reflections.Reflections;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -32,15 +30,16 @@ import lombok.Data;
 
 @Controller
 @RequestMapping(value = "/_check")
-public class DevCheckThymeleafViewController implements ApplicationContextAware {
+public class DevCheckThymeleafViewController {
 
-	private ApplicationContext applicationContext;
+	private final ApplicationContext applicationContext;
 	
 	private final Reflections reflections;
 	
 	private final String pathPrefix;
 	
-	public DevCheckThymeleafViewController(Reflections reflections, String pathPrefix) {
+	public DevCheckThymeleafViewController(ApplicationContext applicationContext, Reflections reflections, String pathPrefix) {
+		this.applicationContext = applicationContext;
 		this.reflections = reflections;
 		this.pathPrefix = pathPrefix;
 	}
@@ -146,8 +145,4 @@ public class DevCheckThymeleafViewController implements ApplicationContextAware 
 		
 	}
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
-	}
 }

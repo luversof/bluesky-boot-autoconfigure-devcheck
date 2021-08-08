@@ -21,7 +21,7 @@ public class LogbackDevCheckController {
 
 	private final LogbackAppenderService<ILoggingEvent> blueskyLogbackAppenderService;
 	
-	@DevCheckDescription("로그 확인")
+	@DevCheckDescription("Check last 500 line log")
 	@GetMapping("/logView")
 	public List<String> logView() {
 		return blueskyLogbackAppenderService.getLogQueue().stream().map(queue -> queue.getLogMessage().replaceAll(CoreConstants.LINE_SEPARATOR, "").replace("\t", "")).collect(Collectors.toList());
