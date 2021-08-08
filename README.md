@@ -1,10 +1,13 @@
 # bluesky-boot-autoconfigure-devcheck
 
-<!-- 개발 검증을 위해 사용하는 컨트롤러를 목록화 하여 보여주는 라이브러리입니다. -->
-This is a library to list and view the controllers for development confirmation.
-A library to list and view controllers for development verification.
+<!-- 
+개발 확인을 위해 사용되는 controller의 method와 utility static method를 목록화 하여 보여주는 라이브러리입니다.
+개발 확인용 controller method 목록은 '/_check' 에서 확인할 수 있고 utility static method 목록은 '/_check/util' 에서 확인할 수 있습니다.
+-->
+It is a library that lists and shows the methods of the controller and the utility static methods used for development confirmation.
+You can check the list of controller methods for development check at '/_check' and the list of utility static methods at '/_check/util'.
 
-## useage
+## settings
 
 ### maven dependencies
 
@@ -13,14 +16,19 @@ A library to list and view controllers for development verification.
     <dependency>
         <groupId>io.github.luversof</groupId>
         <artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
-        <version>1.0.0</version>
+        <version>0.0.1-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
 
 ### properties
 
-Specify the packages to scan as follows.
+<!--
+지정된 범위에서 utility static method를 검색합니다.
+다음과 같이 검사할 패키지를 지정합니다.
+-->
+Searches for utility static methods in the specified scope.
+Specifies the packages to scan as follows:
 
 ```properties
 bluesky-boot.dev-check.base-packages=net.luversof
@@ -34,7 +42,23 @@ If you want to disable it in a non-development environment, set it as follows.
 bluesky-boot.dev-check.enabled=false
 ```
 
-### controller
+## usage
+
+### DevCheckDescription annotation
+
+<!-- 
+_check page에서 해당 method에 대한 설명을 나타내기 위해 DevCheckDescription annotation을 사용합니다.
+controller method와 utility static method에 사용할 수 있습니다.
+-->
+DevCheckDescription annotation is used to indicate the description of the method in the _check page.
+Can be used for controller methods and utility static methods.
+
+| attribute  | description |
+| ------------- | ------------- |
+| value  | <!-- method 아래 추가되는 설명 --> Description added under method  |
+| displayable  | <!-- 목록 노출 여부 --> Whether the list is exposed  |
+
+### controller method
 
 <!-- 
 '*DevCheckController' 접미사와 'application/json' produce가 있는 모든 컨트롤러를 나열하고 표시합니다.
@@ -64,16 +88,51 @@ public class CoreDevCheckController {
 }
 ```
 
-<!-- 아래와 같이 '/_check' 접근시 생성한 controller의 getMapping method가 목록에 추가됩니다. -->
-As shown below, when '/_check' is accessed, the getMapping method of the created controller is added to the list.
+<!-- 
+아래와 같이 해당 controller의 getMapping method가 '/_check' 목록에 추가됩니다.
+-->
+The getMapping method of the controller is added to the '/_check' list as shown below.
 
 ![_check](./_check.png)
 
 
-### annotation
+### utility static method
 
-#### DevCheckDescription
+<!--
+@DevCheckUtil annotation을 목록에 추가할 utility class에 선언합니다.
+다음과 같이 사용합니다.
+-->
+Declare the @DevCheckUtil annotation in the utility class to add to the list.
+Use it like this:
 
-<!-- _check page에서 해당 method에 대한 설명을 나타내기 위해 DevCheckDescription annotation을 사용합니다. -->
-DevCheckDescription annotation is used to indicate the description of the method in the _check page.
+```java
+@DevCheckUtil
+public abstract class UserUtil extends RequestAttributeUtil {
+	
+	@Setter(onMethod_ = @DevCheckDescription(displayable = false))
+	private static LoginUserService loginUserService;
+	
+	private static final String LOGIN_USER = "__loginUser";
 
+	@DevCheckDescription("get loginUser")
+	public static Optional<User> getLoginUser() {
+		Optional<User> userOptional = getRequestAttribute(LOGIN_USER);
+		if (userOptional != null) {
+			return userOptional;
+		}
+		
+		userOptional = loginUserService.getUser();
+		setRequestAttribute(LOGIN_USER, userOptional);
+		
+		return userOptional;
+	}
+}
+
+```
+
+<!--
+아래와 같이 해당 utility static method가 '/_check/util' 목록에 추가됩니다.
+-->
+The utility static method is added to the '/_check/util' list as shown below.
+
+![_check](./_checkUtil.png)
