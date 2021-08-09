@@ -10,6 +10,9 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.3</version>
 	</parent>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>It is a library that lists and shows the methods of the controller and the utility static methods used for development confirmation.</description>
+	<url>https://github.com/luversof/bluesky-boot-autoconfigure-devcheck</url>
 
 	<properties>
 		<java.version>11</java.version>
