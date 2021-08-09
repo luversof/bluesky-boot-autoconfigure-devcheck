@@ -24,10 +24,11 @@ public final class DevCheckUtil {
 	}
 
 	/**
-	 * 테스트 url 주소의 경우 requestPath가 설정되어 있는 경우 해당 path를 추가해준다.
-	 * @param url
-	 * @param method
-	 * @return
+	 * In the case of the test url address, if requestPath is set, the corresponding path is added.
+	 * @param pathPrefix prefix before path
+	 * @param url target url
+	 * @param method target method
+	 * @return url value including parameters
 	 */
 	public static String getUrlWithParameter(String pathPrefix, String url, Method method) {
 		var stringBuilder = new StringBuilder();
