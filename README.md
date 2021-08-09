@@ -16,7 +16,7 @@ You can check the list of controller methods for development check at '/_check' 
     <dependency>
         <groupId>io.github.luversof</groupId>
         <artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </dependency>
 </dependencies>
 ```
