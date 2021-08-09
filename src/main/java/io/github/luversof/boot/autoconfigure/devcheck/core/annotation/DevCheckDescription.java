@@ -12,15 +12,13 @@ import java.lang.annotation.Target;
 public @interface DevCheckDescription {
 	
 	/**
-	 * 설명 문구
-	 * \/_check 또는 \/_check/util 개발 확인 페이지 호출 시 해당 설명 문구가 표시됨
-	 * @return
+	 * A brief description to be displayed on the '/_check' or '/_check/util' page
+	 * @return descriptive text
 	 */
 	String value() default "";
 	
 	/**
-	 * description 노출 여부
-	 * @return
+	 * @return Whether description is exposed
 	 */
 	boolean displayable() default true;
 }
