@@ -1,11 +1,16 @@
 # bluesky-boot-autoconfigure-devcheck
 
 <!-- 
-개발 확인을 위해 사용되는 controller의 method와 utility static method를 목록화 하여 보여주는 라이브러리입니다.
+bluesky-boot-autoconfigure-devcheck는 Spring Boot 기반 개발 환경에서 개발 확인을 위해 사용되는 controller의 method와 utility static method를 목록화 하여 보여주는 라이브러리입니다.
 개발 확인용 controller method 목록은 '/_check' 에서 확인할 수 있고 utility static method 목록은 '/_check/util' 에서 확인할 수 있습니다.
 -->
-It is a library that lists and shows the methods of the controller and the utility static methods used for development confirmation.
+bluesky-boot-autoconfigure-devcheck is a library that lists and shows the methods of the controller and utility static methods used to check the development in the Spring Boot-based development environment.
 You can check the list of controller methods for development check at '/_check' and the list of utility static methods at '/_check/util'.
+
+**Prerequisites**
+
+- [Java 11](https://openjdk.java.net/)
+- [Spring Boot 2.5.3](https://spring.io/)
 
 ## settings
 
