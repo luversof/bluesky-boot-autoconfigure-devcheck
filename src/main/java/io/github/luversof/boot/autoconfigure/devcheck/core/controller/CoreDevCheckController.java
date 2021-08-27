@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDescription;
 
 @RestController
-@RequestMapping(value = "/_check/core",  produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/_check/core", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CoreDevCheckController {
 
 	private ApplicationContext applicationContext;
