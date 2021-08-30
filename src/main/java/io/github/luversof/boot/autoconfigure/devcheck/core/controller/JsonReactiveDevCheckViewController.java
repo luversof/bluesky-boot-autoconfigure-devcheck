@@ -23,7 +23,15 @@ public class JsonReactiveDevCheckViewController extends AbstractReactiveDevCheck
 	
 	@GetMapping({ "", "/index" })
 	public List<ReactiveDevCheckInfo> index(ServerWebExchange exchange, Model model) {
-		return getDevCheckInfoList(exchange);
+		var devCheckInfoList = getDevCheckInfoList(exchange);
+		var uri = exchange.getRequest().getURI();
+		devCheckInfoList.forEach(devCheckInfo -> {
+			for (int i = 0 ; i < devCheckInfo.getUrlList().size() ; i++) {
+				devCheckInfo.getUrlList().set(i, uri.getScheme() + "://" + uri.getHost() + ":" + uri.getPort() + devCheckInfo.getUrlList().get(i));
+			}
+		});
+		
+		return devCheckInfoList;
 	}
 	
 	@GetMapping("/util")

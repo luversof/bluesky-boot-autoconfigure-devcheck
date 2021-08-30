@@ -2,6 +2,8 @@ package io.github.luversof.boot.autoconfigure.devcheck.core.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
@@ -21,8 +23,14 @@ public class JsonDevCheckViewController extends AbstractDevCheckViewController {
 	}
 	
 	@GetMapping({"", "/index"})
-	public List<DevCheckInfo> index() {
-		return getDevCheckInfoList();
+	public List<DevCheckInfo> index(HttpServletRequest request) {
+		var devCheckInfoList = getDevCheckInfoList();
+		devCheckInfoList.forEach(devCheckInfo -> {
+			for (int i = 0 ; i < devCheckInfo.getUrlList().size() ; i++) {
+				devCheckInfo.getUrlList().set(i, request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + devCheckInfo.getUrlList().get(i));
+			}
+		});
+		return devCheckInfoList;
 	}
 	
 	
