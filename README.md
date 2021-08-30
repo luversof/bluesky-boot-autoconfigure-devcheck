@@ -2,10 +2,16 @@
 
 <!-- 
 bluesky-boot-autoconfigure-devcheck는 Spring Boot 기반 개발 환경에서 개발 확인을 위해 사용되는 controller의 method와 utility static method를 목록화 하여 보여주는 라이브러리입니다.
+
 개발 확인용 controller method 목록은 '/_check' 에서 확인할 수 있고 utility static method 목록은 '/_check/util' 에서 확인할 수 있습니다.
+
+Thymeleaf를 사용하는 경우 적절한 UI가 제공되며 Thymeleaf를 사용하지 않는 경우 JSON 으로 목록을 제공합니다.
 -->
 bluesky-boot-autoconfigure-devcheck is a library that lists and shows the methods of the controller and utility static methods used to check the development in the Spring Boot-based development environment.
+
 You can check the list of controller methods for development check at '/_check' and the list of utility static methods at '/_check/util'.
+
+If you're using Thymeleaf, you'll get a proper UI, and if you're not using Thymeleaf, give you the list as JSON.
 
 **Prerequisites**
 
@@ -31,18 +37,26 @@ You can check the list of controller methods for development check at '/_check' 
 
 <!--
 지정된 범위에서 utility static method를 검색합니다.
+
 다음과 같이 검사할 패키지를 지정합니다.
 -->
 Searches for utility static methods in the specified scope.
+
 Specifies the packages to scan as follows:
 
 ```properties
 bluesky-boot.dev-check.base-packages=net.luversof
 ```
 
-By default, this library is enabled.
+<!--
+이 라이브러리는 dependency에 추가하면 기본 활성화되어 있습니다.
 
-If you want to disable it in a non-development environment, set it as follows.
+비개발 환경에서 이 라이브러리의 기능을 비활성화하고 싶은 경우 다음과 같이 설정합니다.
+-->
+
+This library is enabled by default when you add it to your dependency.
+
+If you want to disable the functionality of this library in a non-development environment, set it as follows.
 
 ```properties
 bluesky-boot.dev-check.enabled=false
@@ -54,9 +68,11 @@ bluesky-boot.dev-check.enabled=false
 
 <!-- 
 '/_check' page에서 해당 method에 대한 설명을 나타내기 위해 DevCheckDescription annotation을 사용합니다.
+
 controller method와 utility static method에 사용할 수 있습니다.
 -->
 DevCheckDescription annotation is used to indicate the description of the method in the '/_check' page.
+
 Can be used for controller methods and utility static methods.
 
 | attribute  | description |
@@ -68,9 +84,11 @@ Can be used for controller methods and utility static methods.
 
 <!-- 
 bean name이 '*DevCheckController' 이고 produce가 'application/json' 인 모든 컨트롤러가 '/_check' page 목록화 대상입니다.
+
 다음과 같이 controller를 생성합니다.
  -->
 All controllers with bean name of '*DevCheckController' and produce of 'application/json' are eligible for '/_check' page listing.
+
 Create a controller like this:
 
 ```java
@@ -106,9 +124,11 @@ The getMapping method of the controller is added to the '/_check' list as shown 
 
 <!--
 '/_check/util' 목록에 추가할 utility class에 @DevCheckUtil 또는 @ReactiveDevCheckUtil annotation을 선언합니다.
+
 다음과 같이 사용합니다.
 -->
 Declare @DevCheckUtil or @ReactiveDevCheckUtil annotation in the utility class to be added to the '/_check/util' list.
+
 Use it like this:
 
 ```java
