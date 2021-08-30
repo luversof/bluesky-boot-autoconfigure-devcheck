@@ -11,6 +11,7 @@ You can check the list of controller methods for development check at '/_check' 
 
 - [Java 11](https://openjdk.java.net/)
 - [Spring Boot 2.5.3](https://spring.io/)
+- [Thymleaf 3.0.12.RELEASE (optional)](https://www.thymeleaf.org/)
 
 ## settings
 
@@ -104,10 +105,10 @@ The getMapping method of the controller is added to the '/_check' list as shown 
 ### utility static method
 
 <!--
-'/_check/util' 목록에 추가할 utility class에 @DevCheckUtil annotation을 선언합니다.
+'/_check/util' 목록에 추가할 utility class에 @DevCheckUtil 또는 @ReactiveDevCheckUtil annotation을 선언합니다.
 다음과 같이 사용합니다.
 -->
-Declare @DevCheckUtil annotation in the utility class to be added to the '/_check/util' list.
+Declare @DevCheckUtil or @ReactiveDevCheckUtil annotation in the utility class to be added to the '/_check/util' list.
 Use it like this:
 
 ```java
