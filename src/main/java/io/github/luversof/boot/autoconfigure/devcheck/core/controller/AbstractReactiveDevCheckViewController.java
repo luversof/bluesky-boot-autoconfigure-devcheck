@@ -23,41 +23,40 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public abstract class AbstractReactiveDevCheckViewController {
-	
+
 	private final Reflections reflections;
-	
+
 	private final String pathPrefix;
 
 	protected List<ReactiveDevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = exchange.getApplicationContext().getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class).getHandlerMethods().entrySet().stream()
 				.filter(handlerMapping -> handlerMapping.getValue().getBean().toString().toLowerCase().contains("devcheckcontroller")
 						&& handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.getPatternString().startsWith("/_check"))
-						&& handlerMapping.getKey().getProducesCondition().getExpressions().stream().anyMatch(mediaTypeExpression -> mediaTypeExpression.getMediaType().equals(MediaType.APPLICATION_JSON))
-						)
+						&& handlerMapping.getKey().getProducesCondition().getExpressions().stream().anyMatch(mediaTypeExpression -> mediaTypeExpression.getMediaType().equals(MediaType.APPLICATION_JSON)))
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-		
+
 		List<ReactiveDevCheckInfo> devCheckInfoList = new ArrayList<>();
-		
+
 		handlerMethodMap.entrySet().forEach(map -> {
-			if (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) ||(map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable()))
+			if (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable()))
 				devCheckInfoList.add(new ReactiveDevCheckInfo(pathPrefix, map));
 		});
-		
+
 		return devCheckInfoList.stream().sorted(Comparator.comparing(ReactiveDevCheckInfo::getBeanName).thenComparing(reactiveDevCheckInfo -> reactiveDevCheckInfo.getUrlList().get(0))).collect(Collectors.toList());
 	}
-	
+
 	protected List<DevCheckUtilInfo> getDevCheckUtilInfoList() {
 		Set<Class<?>> utilSet = reflections.getTypesAnnotatedWith(io.github.luversof.boot.autoconfigure.devcheck.core.annotation.ReactiveDevCheckUtil.class);
-		
+
 		List<DevCheckUtilInfo> devCheckUtilInfoList = new ArrayList<>();
 		utilSet.stream().forEach(util -> devCheckUtilInfoList.add(new DevCheckUtilInfo(util)));
 		for (Class<?> util : utilSet) {
 			Method[] declaredMethods = util.getDeclaredMethods();
-			
+
 			for (Method method : declaredMethods) {
 				method.getName();
 			}
-			
+
 		}
 		return devCheckUtilInfoList;
 	}

@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 public class LogbackDevCheckController {
 
 	private final LogbackAppenderService<ILoggingEvent> blueskyLogbackAppenderService;
-	
+
 	@DevCheckDescription("Check last 500 line log")
 	@GetMapping("/logView")
 	public List<String> logView() {

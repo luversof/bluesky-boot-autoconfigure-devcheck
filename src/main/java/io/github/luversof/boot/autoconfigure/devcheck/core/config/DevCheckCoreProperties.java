@@ -9,6 +9,6 @@ import lombok.Data;
 public class DevCheckCoreProperties {
 
 	private boolean enabled;
-	
+
 	private String[] basePackages;
 }

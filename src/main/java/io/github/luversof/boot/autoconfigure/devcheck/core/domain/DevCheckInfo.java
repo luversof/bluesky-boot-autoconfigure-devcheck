@@ -10,7 +10,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDe
 import io.github.luversof.boot.autoconfigure.devcheck.core.util.DevCheckUtil;
 
 public class DevCheckInfo extends AbstractDevCheckInfo<RequestMappingInfo> {
-	
+
 	public DevCheckInfo(String pathPrefix, Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
 		setBeanName(handlerMethodMap.getValue().getBean().toString());
 		setUrlList(new ArrayList<>());
@@ -22,7 +22,7 @@ public class DevCheckInfo extends AbstractDevCheckInfo<RequestMappingInfo> {
 		}
 		setHandlerMethodMap(handlerMethodMap);
 		var methodAnnotation = handlerMethodMap.getValue().getMethodAnnotation(DevCheckDescription.class);
-		if (methodAnnotation != null)	{
+		if (methodAnnotation != null) {
 			setDescription(methodAnnotation.value());
 		}
 	}

@@ -20,7 +20,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.service.Lo
 @ConditionalOnClass(Appender.class)
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true")
 public class LogbackAutoConfiguration {
-	
+
 	@Bean
 	public LogbackAppenderService<ILoggingEvent> blueskyBootLogbackAppenderService() {
 		var logbackAppenderService = new LogbackAppenderService<ILoggingEvent>();
@@ -39,7 +39,7 @@ public class LogbackAutoConfiguration {
 		logbackAppender.start();
 		loggerContext.getLogger(Logger.ROOT_LOGGER_NAME).addAppender(logbackAppender);
 	}
-	
+
 	@Bean
 	public LogbackDevCheckController blueskyBootLogbackDevCheckController(LogbackAppenderService<ILoggingEvent> logbackAppenderService) {
 		return new LogbackDevCheckController(logbackAppenderService);

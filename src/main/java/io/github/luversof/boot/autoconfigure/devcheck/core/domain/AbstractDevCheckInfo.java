@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 public abstract class AbstractDevCheckInfo<T> {
-	
+
 	private String beanName;
 	private List<String> urlList;
 	private String description;

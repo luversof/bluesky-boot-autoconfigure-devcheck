@@ -11,23 +11,26 @@ import lombok.NoArgsConstructor;
 
 /**
  * _check 페이지 구성을 위헤 제공하는 유틸
+ * 
  * @author bluesky
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DevCheckUtil {
-	
+
 	private static final DefaultParameterNameDiscoverer DISCOVERER = new DefaultParameterNameDiscoverer();
-	
+
 	public static String[] getParameterNames(Method method) {
 		return DISCOVERER.getParameterNames(method);
 	}
 
 	/**
-	 * In the case of the test url address, if requestPath is set, the corresponding path is added.
+	 * In the case of the test url address, if requestPath is set, the corresponding
+	 * path is added.
+	 * 
 	 * @param pathPrefix prefix before path
-	 * @param url target url
-	 * @param method target method
+	 * @param url        target url
+	 * @param method     target method
 	 * @return url value including parameters
 	 */
 	public static String getUrlWithParameter(String pathPrefix, String url, Method method) {
@@ -39,15 +42,15 @@ public final class DevCheckUtil {
 		appendParameter(stringBuilder, method);
 		return stringBuilder.toString().replace("//", "/");
 	}
-	
+
 	private static void appendParameter(StringBuilder stringBuilder, Method method) {
-		
+
 		var parameterNames = getParameterNames(method);
 		if (parameterNames == null || parameterNames.length == 0) {
 			return;
 		}
-		
-		for (int i = 0 ; i < parameterNames.length ; i++) {
+
+		for (int i = 0; i < parameterNames.length; i++) {
 			if (method.getParameters()[i].isAnnotationPresent(PathVariable.class)) {
 				continue;
 			}

@@ -21,19 +21,18 @@ public class JsonDevCheckViewController extends AbstractDevCheckViewController {
 	public JsonDevCheckViewController(ApplicationContext applicationContext, Reflections reflections, String pathPrefix) {
 		super(applicationContext, reflections, pathPrefix);
 	}
-	
-	@GetMapping({"", "/index"})
+
+	@GetMapping({ "", "/index" })
 	public List<DevCheckInfo> index(HttpServletRequest request) {
 		var devCheckInfoList = getDevCheckInfoList();
 		devCheckInfoList.forEach(devCheckInfo -> {
-			for (int i = 0 ; i < devCheckInfo.getUrlList().size() ; i++) {
+			for (int i = 0; i < devCheckInfo.getUrlList().size(); i++) {
 				devCheckInfo.getUrlList().set(i, request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + devCheckInfo.getUrlList().get(i));
 			}
 		});
 		return devCheckInfoList;
 	}
-	
-	
+
 	@GetMapping("/util")
 	public List<DevCheckUtilInfo> util() {
 		return getDevCheckUtilInfoList();

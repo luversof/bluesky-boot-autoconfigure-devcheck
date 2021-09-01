@@ -10,12 +10,12 @@ import lombok.Data;
 
 @Data
 public class DevCheckUtilMethodInfo {
-	
+
 	public DevCheckUtilMethodInfo(Method method) {
 		this.method = method.getName();
 		this.parameterNames = DevCheckUtil.getParameterNames(method);
-		this.returnType =  method.getReturnType().getSimpleName(); 
-		
+		this.returnType = method.getReturnType().getSimpleName();
+
 		if (AnnotatedElementUtils.hasAnnotation(method, DevCheckDescription.class)) {
 			var mergedAnnotation = AnnotatedElementUtils.findMergedAnnotation(method, DevCheckDescription.class);
 			if (mergedAnnotation != null) {
@@ -23,6 +23,7 @@ public class DevCheckUtilMethodInfo {
 			}
 		}
 	}
+
 	private String description;
 	private String returnType;
 	private String method;

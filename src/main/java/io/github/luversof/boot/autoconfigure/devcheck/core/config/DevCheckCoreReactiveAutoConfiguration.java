@@ -28,7 +28,7 @@ public class DevCheckCoreReactiveAutoConfiguration {
 		String pathPrefix = "/";
 		return new ThymeleafReactiveDevCheckViewController(reflections, pathPrefix);
 	}
-	
+
 	@Bean
 	@ConditionalOnMissingBean(name = "blueskyBootThymeleafReactiveDevCheckViewController")
 	public JsonReactiveDevCheckViewController blueskyBootJsonReactiveDevCheckViewController(DevCheckCoreProperties devCheckProperties) {
@@ -36,7 +36,7 @@ public class DevCheckCoreReactiveAutoConfiguration {
 		String pathPrefix = "/";
 		return new JsonReactiveDevCheckViewController(reflections, pathPrefix);
 	}
-	
+
 	@Bean
 	public CoreDevCheckController blueskyBootCoreDevCheckController(ApplicationContext applicationContext) {
 		return new CoreDevCheckController(applicationContext);

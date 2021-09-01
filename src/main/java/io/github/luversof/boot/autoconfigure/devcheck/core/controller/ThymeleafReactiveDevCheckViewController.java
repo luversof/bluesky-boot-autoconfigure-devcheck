@@ -12,21 +12,21 @@ import reactor.core.publisher.Mono;
 @Controller
 @RequestMapping(value = "/_check")
 public class ThymeleafReactiveDevCheckViewController extends AbstractReactiveDevCheckViewController {
-	
+
 	public ThymeleafReactiveDevCheckViewController(Reflections reflections, String pathPrefix) {
 		super(reflections, pathPrefix);
 	}
-	
+
 	@GetMapping({ "", "/index" })
 	public Mono<String> index(ServerWebExchange exchange, Model model) {
 		model.addAttribute("devCheckInfoList", getDevCheckInfoList(exchange));
 		return Mono.just("_check/index");
 	}
-	
+
 	@GetMapping("/util")
 	public Mono<String> util(Model model) {
 		model.addAttribute("devCheckUtilInfoList", getDevCheckUtilInfoList());
 		return Mono.just("_check/util");
 	}
-	
+
 }

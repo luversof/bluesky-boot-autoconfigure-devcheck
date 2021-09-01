@@ -28,19 +28,19 @@ public class CoreDevCheckController {
 	public String[] activeProfiles() {
 		return applicationContext.getEnvironment().getActiveProfiles();
 	}
-	
+
 	@DevCheckDescription("locale")
 	@GetMapping("/locale")
 	public Locale locale() {
 		return LocaleContextHolder.getLocale();
 	}
-	
+
 	@DevCheckDescription("LocaleDateTime.now()")
 	@GetMapping("/localDateTimeNow")
 	public LocalDateTime localeDateTimeNow() {
 		return LocalDateTime.now();
 	}
-	
+
 	@DevCheckDescription("ZonedDateTime.now()")
 	@GetMapping("/zonedDateTimeNow")
 	public ZonedDateTime zonedDateTimeNow() {
