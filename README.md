@@ -1,18 +1,18 @@
 # bluesky-boot-autoconfigure-devcheck
 
 <!-- 
-bluesky-boot-autoconfigure-devcheck는 Spring Boot 기반 개발 환경에서 개발 확인을 위해 사용되는 controller의 method와 utility static method를 목록화 하여 보여주는 라이브러리입니다.
+bluesky-boot-autoconfigure-devcheck는 Spring Boot 기반 프로젝트에서 개발 내용 확인을 위해 만드는 개발자 확인용 controller method 목록과 일반적으로 사용되는 utility static method 목록을 확인 할 수 있도록 도와주는 라이브러리입니다.
 
 개발 확인용 controller method 목록은 '/_check' 에서 확인할 수 있고 utility static method 목록은 '/_check/util' 에서 확인할 수 있습니다.
 
-Thymeleaf를 사용하는 경우 적절한 UI가 제공되며 Thymeleaf를 사용하지 않는 경우 JSON 으로 목록을 제공합니다.
+Thymeleaf를 사용하는 경우 Thymeleaf UI 기반으로 목록이 제공되며 그 외의 경우 JSON으로 목록을 제공합니다.
 -->
 
-bluesky-boot-autoconfigure-devcheck is a library that lists and shows the methods of the controller and utility static methods used to check the development in the Spring Boot-based development environment.
+bluesky-boot-autoconfigure-devcheck is a library that helps you to check the list of controller methods and commonly used utility static methods for developer checking that are made to check the development contents in Spring Boot-based projects.
 
 You can check the list of controller methods for development check at '/_check' and the list of utility static methods at '/_check/util'.
 
-If you're using Thymeleaf, you'll get a proper UI, and if you're not using Thymeleaf, give you the list as JSON.
+If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, otherwise as JSON.
 
 **Prerequisites**
 
@@ -123,6 +123,7 @@ public class CoreDevCheckController {
 <!-- 
 아래와 같이 해당 controller의 getMapping method가 '/_check' 목록에 추가됩니다.
 -->
+
 The getMapping method of the controller is added to the '/_check' list as shown below.
 
 ![_check](./_check.png)
@@ -168,6 +169,7 @@ public abstract class UserUtil extends RequestAttributeUtil {
 <!--
 아래와 같이 해당 utility static method가 '/_check/util' 목록에 추가됩니다.
 -->
+
 The utility static method is added to the '/_check/util' list as shown below.
 
 ![_check](./_checkUtil.png)
