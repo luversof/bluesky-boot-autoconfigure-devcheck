@@ -144,7 +144,7 @@ Use it like this:
 
 ```java
 @DevCheckUtil
-public abstract class UserUtil extends RequestAttributeUtil {
+public class UserUtil extends RequestAttributeUtil {
 	
 	@Setter(onMethod_ = @DevCheckDescription(displayable = false))
 	private static LoginUserService loginUserService;
