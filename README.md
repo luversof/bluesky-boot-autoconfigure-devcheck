@@ -17,7 +17,7 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
 **Prerequisites**
 
 - [Java 11](https://openjdk.java.net/)
-- [Spring Boot 2.5.3](https://spring.io/)
+- [Spring Boot 2.5.4](https://spring.io/)
 - [Thymleaf 3.0.12.RELEASE (optional)](https://www.thymeleaf.org/)
 
 ## settings
@@ -100,13 +100,14 @@ The controller bean is a '/_check' page listing target that satisfies the follow
 Create a controller like this:
 
 ```java
+@DevCheckController
 @RestController
 @RequestMapping(value = "/_check/core",  produces = MediaType.APPLICATION_JSON_VALUE)
-public class CoreDevCheckController {
+public class DevCheckCoreController {
 
 	private ApplicationContext applicationContext;
 
-	public CoreDevCheckController(ApplicationContext applicationContext) {
+	public DevCheckCoreController(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 
