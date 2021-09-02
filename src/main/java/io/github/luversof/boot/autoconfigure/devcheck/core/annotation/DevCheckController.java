@@ -8,8 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 대상 DevCheckController를 지정합니다.<br />
- * Specifies the target DevCheckController.<br />
+ * 대상 DevCheckController를 지정합니다.<br>
+ * Specifies the target DevCheckController.<br>
  * @author bluesky
  *
  */

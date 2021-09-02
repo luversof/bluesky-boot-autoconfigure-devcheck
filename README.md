@@ -86,16 +86,16 @@ Can be used for controller methods and utility static methods.
 <!-- 
 controller bean이 다음 조건을 만족하는 '/_check' page 목록화 대상입니다.
 
-'@DevCheckController' annotation을 선언
-produce 속성이 'application/json' 
+* '@DevCheckController' annotation을 선언
+* produce 속성이 'application/json' 
 
 다음과 같이 controller를 생성합니다.
 -->
  
 The controller bean is a '/_check' page listing target that satisfies the following conditions.
 
-Declare '@DevCheckController' annotation
-The produce attribute is 'application/json'
+* Declare '@DevCheckController' annotation
+* The produce attribute is 'application/json'
 
 Create a controller like this:
 
