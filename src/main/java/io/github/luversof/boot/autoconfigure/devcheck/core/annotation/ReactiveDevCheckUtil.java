@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface DevCheckUtil {
+public @interface ReactiveDevCheckUtil {
 
 }

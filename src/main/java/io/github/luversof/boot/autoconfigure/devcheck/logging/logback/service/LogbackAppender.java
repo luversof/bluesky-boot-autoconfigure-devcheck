@@ -5,13 +5,13 @@ import ch.qos.logback.core.encoder.Encoder;
 import lombok.Setter;
 
 public class LogbackAppender<E> extends UnsynchronizedAppenderBase<E> {
-	
+
 	private LogbackAppenderService<E> blueskyLogbackAppenderService;
-	
+
 	public LogbackAppender(LogbackAppenderService<E> blueskyLogbackAppenderService) {
 		this.blueskyLogbackAppenderService = blueskyLogbackAppenderService;
 	}
-	
+
 	@Setter
 	private Encoder<E> encoder;
 

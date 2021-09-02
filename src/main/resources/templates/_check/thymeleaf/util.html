@@ -20,7 +20,47 @@ body { margin: 0; padding: 0;}
 .util-container .tr .method-description li { padding-bottom: 8px; list-style-type: none; }
 .util-container .tr .method-comment { display: block; color: #008200; letter-spacing: -.5px}
 .util-container div { padding: 15px;}
+.devcheck-search {
+  background: url('') no-repeat 10px 12px; /* Add a search icon to input */
+  background-size: 18px auto;
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
 </style>
+<script>
+	function devCheckSearch() {
+		var searchValue = document.getElementById("devCheckSearchInput").value.toUpperCase();
+		var list = document.getElementsByClassName("devcheck-list");
+
+		for (i = 0; i < list.length; i++) {
+			var methodName = list[i].getElementsByClassName("method-name")[0].innerText;
+			console.log("A : " + methodName);
+			if (methodName.toUpperCase().indexOf(searchValue) > -1) {
+				list[i].style.display = "";
+			} else {
+				list[i].style.display = "none";
+			}
+		}
+	}
+	
+	function devCheckSearchWithHash() {
+		if (location.hash != "") {
+			document.getElementById("devCheckSearchInput").value = location.hash.substring(1);
+			devCheckSearch();
+		}
+	}
+	
+	window.onload = function(){
+		devCheckSearchWithHash();
+	};
+	
+	window.onhashchange = function() {
+		devCheckSearchWithHash();
+	}
+</script>
 </head>
 <body>
 <div class="util-container">
@@ -30,13 +70,15 @@ body { margin: 0; padding: 0;}
     	<a th:href="@{/_check}">Go to DevCheck List</a>
     </div>
     
+    <input type="text" id="devCheckSearchInput" autofocus class="devcheck-search" onkeyup="devCheckSearch()" placeholder="Enter what you want to search for." />
+    
     <ul>
         <li class="thead">
             <span class="method-name">Util name</span>
             <span class="method-description">method</span>
         </li>
         
-        <li class="tr" th:each="devCheckUtilInfo : ${devCheckUtilInfoList}" th:id="${devCheckUtilInfo.methodName}">
+        <li class="tr devcheck-list" th:each="devCheckUtilInfo : ${devCheckUtilInfoList}" th:id="${devCheckUtilInfo.methodName}">
             <div class="method-name" th:text="${devCheckUtilInfo.methodName}"></div>
             <div class="method-description">
                 <ul>
