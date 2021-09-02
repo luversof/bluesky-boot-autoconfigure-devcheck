@@ -17,7 +17,7 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
 **Prerequisites**
 
 - [Java 11](https://openjdk.java.net/)
-- [Spring Boot 2.5.3](https://spring.io/)
+- [Spring Boot 2.5.4](https://spring.io/)
 - [Thymleaf 3.0.12.RELEASE (optional)](https://www.thymeleaf.org/)
 
 ## settings
