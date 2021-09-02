@@ -100,13 +100,14 @@ The controller bean is a '/_check' page listing target that satisfies the follow
 Create a controller like this:
 
 ```java
+@DevCheckController
 @RestController
 @RequestMapping(value = "/_check/core",  produces = MediaType.APPLICATION_JSON_VALUE)
-public class CoreDevCheckController {
+public class DevCheckCoreController {
 
 	private ApplicationContext applicationContext;
 
-	public CoreDevCheckController(ApplicationContext applicationContext) {
+	public DevCheckCoreController(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 
