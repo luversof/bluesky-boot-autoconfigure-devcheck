@@ -12,7 +12,7 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.rolling.RollingFileAppender;
-import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.controller.LogbackDevCheckController;
+import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.controller.DevCheckLogbackController;
 import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.service.LogbackAppender;
 import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.service.LogbackAppenderService;
 
@@ -41,7 +41,7 @@ public class LogbackAutoConfiguration {
 	}
 
 	@Bean
-	public LogbackDevCheckController blueskyBootLogbackDevCheckController(LogbackAppenderService<ILoggingEvent> logbackAppenderService) {
-		return new LogbackDevCheckController(logbackAppenderService);
+	public DevCheckLogbackController blueskyBootDevCheckLogbackController(LogbackAppenderService<ILoggingEvent> logbackAppenderService) {
+		return new DevCheckLogbackController(logbackAppenderService);
 	}
 }

@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.CoreConstants;
+import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDescription;
 import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.service.LogbackAppenderService;
 import lombok.AllArgsConstructor;
 
+@DevCheckController
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/_check/logging/logback", produces = MediaType.APPLICATION_JSON_VALUE)
-public class LogbackDevCheckController {
+public class DevCheckLogbackController {
 
 	private final LogbackAppenderService<ILoggingEvent> blueskyLogbackAppenderService;
 

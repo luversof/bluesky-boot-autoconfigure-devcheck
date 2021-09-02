@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDescription;
 
+@DevCheckController
 @RestController
 @RequestMapping(value = "/_check/core", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CoreDevCheckController {
+public class DevCheckCoreController {
 
 	private ApplicationContext applicationContext;
 
-	public CoreDevCheckController(ApplicationContext applicationContext) {
+	public DevCheckCoreController(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 

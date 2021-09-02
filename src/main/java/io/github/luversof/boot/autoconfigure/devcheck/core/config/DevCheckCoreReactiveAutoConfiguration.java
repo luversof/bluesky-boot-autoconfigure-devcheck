@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-import io.github.luversof.boot.autoconfigure.devcheck.core.controller.CoreDevCheckController;
+import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCoreController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.JsonReactiveDevCheckViewController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.ThymeleafReactiveDevCheckViewController;
 
@@ -38,7 +38,8 @@ public class DevCheckCoreReactiveAutoConfiguration {
 	}
 
 	@Bean
-	public CoreDevCheckController blueskyBootCoreDevCheckController(ApplicationContext applicationContext) {
-		return new CoreDevCheckController(applicationContext);
+	public DevCheckCoreController blueskyBootDevCheckCoreController(ApplicationContext applicationContext) {
+		return new DevCheckCoreController(applicationContext);
 	}
+
 }

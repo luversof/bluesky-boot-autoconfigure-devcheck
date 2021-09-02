@@ -12,7 +12,7 @@ import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import io.github.luversof.boot.autoconfigure.devcheck.core.controller.CoreDevCheckController;
+import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCoreController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,7 +28,7 @@ class DevCheckCoreAutoServletConfigurationTests {
 	@Test
 	void hasCoreDevCheckController() {
 		this.contextRunner.run(context -> {
-			assertThat(context).hasSingleBean(CoreDevCheckController.class);
+			assertThat(context).hasSingleBean(DevCheckCoreController.class);
 		});
 	}
 	

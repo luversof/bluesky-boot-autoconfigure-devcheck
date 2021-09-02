@@ -7,6 +7,7 @@ bluesky-boot-autoconfigure-devcheck는 Spring Boot 기반 개발 환경에서 �
 
 Thymeleaf를 사용하는 경우 적절한 UI가 제공되며 Thymeleaf를 사용하지 않는 경우 JSON 으로 목록을 제공합니다.
 -->
+
 bluesky-boot-autoconfigure-devcheck is a library that lists and shows the methods of the controller and utility static methods used to check the development in the Spring Boot-based development environment.
 
 You can check the list of controller methods for development check at '/_check' and the list of utility static methods at '/_check/util'.
@@ -83,11 +84,18 @@ Can be used for controller methods and utility static methods.
 ### controller method
 
 <!-- 
-bean name이 '*DevCheckController' 이고 produce가 'application/json' 인 모든 컨트롤러가 '/_check' page 목록화 대상입니다.
+controller bean이 다음 조건을 만족하는 '/_check' page 목록화 대상입니다.
+
+'@DevCheckController' annotation을 선언
+produce 속성이 'application/json' 
 
 다음과 같이 controller를 생성합니다.
- -->
-All controllers with bean name of '*DevCheckController' and produce of 'application/json' are eligible for '/_check' page listing.
+-->
+ 
+The controller bean is a '/_check' page listing target that satisfies the following conditions.
+
+Declare '@DevCheckController' annotation
+The produce attribute is 'application/json'
 
 Create a controller like this:
 
@@ -127,6 +135,7 @@ The getMapping method of the controller is added to the '/_check' list as shown 
 
 다음과 같이 사용합니다.
 -->
+
 Declare @DevCheckUtil or @ReactiveDevCheckUtil annotation in the utility class to be added to the '/_check/util' list.
 
 Use it like this:

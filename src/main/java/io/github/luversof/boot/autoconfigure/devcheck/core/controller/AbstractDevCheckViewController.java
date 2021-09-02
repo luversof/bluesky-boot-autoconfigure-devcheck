@@ -16,7 +16,9 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDescription;
+import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckUtil;
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckInfo;
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckUtilInfo;
 import lombok.AllArgsConstructor;
@@ -32,7 +34,7 @@ public abstract class AbstractDevCheckViewController {
 
 	protected List<DevCheckInfo> getDevCheckInfoList() {
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods().entrySet().stream()
-				.filter(handlerMapping -> handlerMapping.getValue().getBean().toString().toLowerCase().contains("devcheckcontroller")
+				.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)
 						&& handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.startsWith("/_check"))
 						&& handlerMapping.getKey().getProducesCondition().getExpressions().stream().anyMatch(mediaTypeExpression -> mediaTypeExpression.getMediaType().equals(MediaType.APPLICATION_JSON)))
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
@@ -42,24 +44,19 @@ public abstract class AbstractDevCheckViewController {
 			if ((!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
 				devCheckInfoList.add(new DevCheckInfo(pathPrefix, map));
 		});
-
 		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::getBeanName).thenComparing(devCheckInfo -> devCheckInfo.getUrlList().get(0))).collect(Collectors.toList());
 	}
 
 	protected List<DevCheckUtilInfo> getDevCheckUtilInfoList() {
-		Set<Class<?>> utilSet = reflections.getTypesAnnotatedWith(io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckUtil.class);
-
+		Set<Class<?>> utilSet = reflections.getTypesAnnotatedWith(DevCheckUtil.class);
 		List<DevCheckUtilInfo> devCheckUtilInfoList = new ArrayList<>();
 		utilSet.stream().forEach(util -> devCheckUtilInfoList.add(new DevCheckUtilInfo(util)));
 		for (Class<?> util : utilSet) {
 			Method[] declaredMethods = util.getDeclaredMethods();
-
 			for (Method method : declaredMethods) {
 				method.getName();
 			}
-
 		}
-
 		return devCheckUtilInfoList;
 	}
 
