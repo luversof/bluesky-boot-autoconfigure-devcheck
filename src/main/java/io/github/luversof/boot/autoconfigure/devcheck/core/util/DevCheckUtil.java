@@ -2,10 +2,12 @@ package io.github.luversof.boot.autoconfigure.devcheck.core.util;
 
 import java.lang.reflect.Method;
 
+import org.reflections.Reflections;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreProperties;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -57,4 +59,12 @@ public final class DevCheckUtil {
 			stringBuilder.append(i == 0 ? "?" : "&").append(parameterNames[i]).append("={").append(parameterNames[i]).append("}");
 		}
 	}
+	
+	public static Reflections getReflections(DevCheckCoreProperties devCheckCoreProperties) {
+		if (devCheckCoreProperties.getBasePackages() == null) {
+			return new Reflections("io.github.luversof");
+		}
+		return new Reflections("io.github.luversof", devCheckCoreProperties.getBasePackages());
+	}
+
 }

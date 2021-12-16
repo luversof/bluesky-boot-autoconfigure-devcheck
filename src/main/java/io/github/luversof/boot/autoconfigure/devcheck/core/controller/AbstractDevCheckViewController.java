@@ -35,7 +35,8 @@ public abstract class AbstractDevCheckViewController {
 	protected List<DevCheckInfo> getDevCheckInfoList() {
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods().entrySet().stream()
 				.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)
-						&& handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.startsWith("/_check"))
+						&& ((handlerMapping.getKey().getPatternsCondition() != null && handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.startsWith("/_check")))
+								|| handlerMapping.getKey().getPathPatternsCondition() != null && handlerMapping.getKey().getPathPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.getPatternString().startsWith("/_check")))
 						&& handlerMapping.getKey().getProducesCondition().getExpressions().stream().anyMatch(mediaTypeExpression -> mediaTypeExpression.getMediaType().equals(MediaType.APPLICATION_JSON)))
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 

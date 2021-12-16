@@ -29,7 +29,7 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
     <dependency>
         <groupId>io.github.luversof</groupId>
         <artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.2-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -174,3 +174,10 @@ public class UserUtil extends RequestAttributeUtil {
 The utility static method is added to the '/_check/util' list as shown below.
 
 ![_check](./_checkUtil.png)
+
+## version history
+
+| version | description |
+| ------------- | ------------- |
+| 1.0.1 | Spring Boot 2.5.4  |
+| 1.0.2 | Spring Boot 2.6.1  |

@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.luversof</groupId>
 	<artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.4</version>
+		<version>2.6.1</version>
 	</parent>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>It is a library that lists and shows the methods of the controller and the utility static methods used for development confirmation.</description>
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
-			<version>0.9.12</version>
+			<version>0.10.2</version>
 		</dependency>
 
 		<dependency>

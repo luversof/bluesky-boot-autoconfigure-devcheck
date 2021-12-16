@@ -14,6 +14,7 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCoreController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.JsonReactiveDevCheckViewController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.ThymeleafReactiveDevCheckViewController;
+import io.github.luversof.boot.autoconfigure.devcheck.core.util.DevCheckUtil;
 
 @Configuration(value = "_blueskyBootDevCheckCoreReactiveAutoConfiguration", proxyBeanMethods = false)
 @ConditionalOnClass({ WebFluxConfigurer.class })
@@ -23,16 +24,16 @@ public class DevCheckCoreReactiveAutoConfiguration {
 
 	@Bean
 	@ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
-	public ThymeleafReactiveDevCheckViewController blueskyBootThymeleafReactiveDevCheckViewController(DevCheckCoreProperties devCheckProperties) {
-		Reflections reflections = new Reflections("io.github.luversof", devCheckProperties.getBasePackages());
+	public ThymeleafReactiveDevCheckViewController blueskyBootThymeleafReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
+		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
 		String pathPrefix = "/";
 		return new ThymeleafReactiveDevCheckViewController(reflections, pathPrefix);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean(name = "blueskyBootThymeleafReactiveDevCheckViewController")
-	public JsonReactiveDevCheckViewController blueskyBootJsonReactiveDevCheckViewController(DevCheckCoreProperties devCheckProperties) {
-		Reflections reflections = new Reflections("io.github.luversof", devCheckProperties.getBasePackages());
+	public JsonReactiveDevCheckViewController blueskyBootJsonReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
+		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
 		String pathPrefix = "/";
 		return new JsonReactiveDevCheckViewController(reflections, pathPrefix);
 	}

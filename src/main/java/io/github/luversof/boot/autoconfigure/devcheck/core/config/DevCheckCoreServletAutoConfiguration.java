@@ -16,6 +16,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCoreController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.JsonDevCheckViewController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.ThymeleafDevCheckViewController;
+import io.github.luversof.boot.autoconfigure.devcheck.core.util.DevCheckUtil;
 
 @Configuration(value = "_blueskyBootDevCheckCoreServletAutoConfiguration", proxyBeanMethods = false)
 @ConditionalOnClass({ Servlet.class, DispatcherServlet.class })
@@ -26,7 +27,7 @@ public class DevCheckCoreServletAutoConfiguration {
 	@Bean
 	@ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
 	public ThymeleafDevCheckViewController blueskyBootThymeleafDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
-		Reflections reflections = new Reflections("io.github.luversof", devCheckCoreProperties.getBasePackages());
+		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
 		String pathPrefix = "/";
 		return new ThymeleafDevCheckViewController(applicationContext, reflections, pathPrefix);
 	}
@@ -34,7 +35,7 @@ public class DevCheckCoreServletAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(name = "blueskyBootThymeleafDevCheckViewController")
 	public JsonDevCheckViewController blueskyBootJsonDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
-		Reflections reflections = new Reflections("io.github.luversof", devCheckCoreProperties.getBasePackages());
+		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
 		String pathPrefix = "/";
 		return new JsonDevCheckViewController(applicationContext, reflections, pathPrefix);
 	}
