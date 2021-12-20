@@ -19,7 +19,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDe
 @RequestMapping(value = "/_check/core", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DevCheckCoreController {
 
-	private ApplicationContext applicationContext;
+	private final ApplicationContext applicationContext;
 
 	public DevCheckCoreController(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;

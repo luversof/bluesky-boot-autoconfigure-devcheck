@@ -15,8 +15,8 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDe
 import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.service.LogbackAppenderService;
 import lombok.AllArgsConstructor;
 
-@DevCheckController
 @AllArgsConstructor
+@DevCheckController
 @RestController
 @RequestMapping(value = "/_check/logging/logback", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DevCheckLogbackController {

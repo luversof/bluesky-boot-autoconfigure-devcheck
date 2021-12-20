@@ -177,7 +177,11 @@ The utility static method is added to the '/_check/util' list as shown below.
 
 ## version history
 
-| version | description |
+| version | prerequisites |
 | ------------- | ------------- |
-| 1.0.1 | Spring Boot 2.5.4  |
-| 1.0.2 | Spring Boot 2.6.1  |
+| 1.0.1 | Java 11,
+Spring Boot 2.5.4,
+Thymleaf 3.0.12.RELEASE (optional)  |
+| 1.0.2 | Java 11,
+Spring Boot 2.6.1,
+Thymleaf 3.0.12.RELEASE (optional)  |
