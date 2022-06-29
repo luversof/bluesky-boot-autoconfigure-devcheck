@@ -77,7 +77,7 @@ The default is `/_check`.
 bluesky-boot.dev-check.path-prefix=/info/_check
 ```
 
-<--
+<!--
 path pattern으로 설정할 수도 있습니다.
 -->
 
