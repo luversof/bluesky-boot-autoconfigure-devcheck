@@ -18,12 +18,14 @@ public class ThymeleafDevCheckViewController extends AbstractDevCheckViewControl
 	@GetMapping({ "", "/index" })
 	public String index(ModelMap modelMap) {
 		modelMap.addAttribute("devCheckInfoList", getDevCheckInfoList());
+		modelMap.addAttribute("pathPrefix", getPathPrefix());
 		return "_check/thymeleaf/index";
 	}
 
 	@GetMapping("/util")
 	public String util(ModelMap modelMap) {
 		modelMap.addAttribute("devCheckUtilInfoList", getDevCheckUtilInfoList());
+		modelMap.addAttribute("pathPrefix", getPathPrefix());
 		return "_check/thymeleaf/util";
 	}
 
