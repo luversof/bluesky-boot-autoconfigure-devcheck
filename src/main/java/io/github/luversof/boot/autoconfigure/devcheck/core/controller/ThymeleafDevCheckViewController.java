@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/_check")
+@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}")
 public class ThymeleafDevCheckViewController extends AbstractDevCheckViewController {
 
-	public ThymeleafDevCheckViewController(ApplicationContext applicationContext, Reflections reflections, String pathPrefix) {
-		super(applicationContext, reflections, pathPrefix);
+	public ThymeleafDevCheckViewController(ApplicationContext applicationContext, Reflections reflections) {
+		super(applicationContext, reflections);
 	}
 
 	@GetMapping({ "", "/index" })

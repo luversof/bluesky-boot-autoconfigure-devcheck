@@ -28,16 +28,14 @@ public class DevCheckCoreServletAutoConfiguration {
 	@ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
 	public ThymeleafDevCheckViewController blueskyBootThymeleafDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		String pathPrefix = "/";
-		return new ThymeleafDevCheckViewController(applicationContext, reflections, pathPrefix);
+		return new ThymeleafDevCheckViewController(applicationContext, reflections);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean(name = "blueskyBootThymeleafDevCheckViewController")
 	public JsonDevCheckViewController blueskyBootJsonDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		String pathPrefix = "/";
-		return new JsonDevCheckViewController(applicationContext, reflections, pathPrefix);
+		return new JsonDevCheckViewController(applicationContext, reflections);
 	}
 
 	@Bean

@@ -16,7 +16,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDe
 
 @DevCheckController
 @RestController
-@RequestMapping(value = "/_check/core", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}/core", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DevCheckCoreController {
 
 	private final ApplicationContext applicationContext;

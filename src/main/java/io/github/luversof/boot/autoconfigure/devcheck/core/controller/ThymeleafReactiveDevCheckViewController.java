@@ -10,11 +10,11 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Controller
-@RequestMapping(value = "/_check")
+@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}")
 public class ThymeleafReactiveDevCheckViewController extends AbstractReactiveDevCheckViewController {
 
-	public ThymeleafReactiveDevCheckViewController(Reflections reflections, String pathPrefix) {
-		super(reflections, pathPrefix);
+	public ThymeleafReactiveDevCheckViewController(Reflections reflections) {
+		super(reflections);
 	}
 
 	@GetMapping({ "", "/index" })

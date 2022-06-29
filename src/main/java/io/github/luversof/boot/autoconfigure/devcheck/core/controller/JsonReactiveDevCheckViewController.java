@@ -13,11 +13,11 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckUtilIn
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.ReactiveDevCheckInfo;
 
 @RestController
-@RequestMapping(value = "/_check", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}", produces = MediaType.APPLICATION_JSON_VALUE)
 public class JsonReactiveDevCheckViewController extends AbstractReactiveDevCheckViewController {
 
-	public JsonReactiveDevCheckViewController(Reflections reflections, String pathPrefix) {
-		super(reflections, pathPrefix);
+	public JsonReactiveDevCheckViewController(Reflections reflections) {
+		super(reflections);
 	}
 
 	@GetMapping({ "", "/index" })

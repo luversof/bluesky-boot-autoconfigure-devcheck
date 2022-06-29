@@ -19,6 +19,7 @@ import org.springframework.web.server.ServerWebExchange;
 import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckDescription;
 import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.ReactiveDevCheckUtil;
+import io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreProperties;
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckUtilInfo;
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.ReactiveDevCheckInfo;
 import lombok.AllArgsConstructor;
@@ -28,19 +29,23 @@ public abstract class AbstractReactiveDevCheckViewController {
 
 	private final Reflections reflections;
 
-	private final String pathPrefix;
+	protected String getPathPrefix(ServerWebExchange exchange) {
+		return exchange.getRequest().getURI().toString().replace("/index", "").replace("/util", "");
+	}
 
 	protected List<ReactiveDevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
+		var devCheckCoreProperties = exchange.getApplicationContext().getBean(DevCheckCoreProperties.class);
+		
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = exchange.getApplicationContext().getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class).getHandlerMethods().entrySet().stream()
 				.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)
-						&& handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.getPatternString().startsWith("/_check"))
+						&& handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.getPatternString().startsWith(devCheckCoreProperties.getPathPrefix()))
 						&& handlerMapping.getKey().getProducesCondition().getExpressions().stream().anyMatch(mediaTypeExpression -> mediaTypeExpression.getMediaType().equals(MediaType.APPLICATION_JSON)))
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
 		List<ReactiveDevCheckInfo> devCheckInfoList = new ArrayList<>();
 		handlerMethodMap.entrySet().forEach(map -> {
 			if (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable()))
-				devCheckInfoList.add(new ReactiveDevCheckInfo(pathPrefix, map));
+				devCheckInfoList.add(new ReactiveDevCheckInfo(getPathPrefix(exchange), map));
 		});
 		return devCheckInfoList.stream().sorted(Comparator.comparing(ReactiveDevCheckInfo::getBeanName).thenComparing(reactiveDevCheckInfo -> reactiveDevCheckInfo.getUrlList().get(0))).collect(Collectors.toList());
 	}

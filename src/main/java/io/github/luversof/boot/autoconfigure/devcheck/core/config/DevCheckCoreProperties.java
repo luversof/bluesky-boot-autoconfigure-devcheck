@@ -16,4 +16,5 @@ public class DevCheckCoreProperties {
 	 */
 	private String[] basePackages;
 	
+	private String pathPrefix;
 }
