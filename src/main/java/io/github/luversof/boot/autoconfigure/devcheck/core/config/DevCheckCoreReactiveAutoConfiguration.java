@@ -1,6 +1,7 @@
 package io.github.luversof.boot.autoconfigure.devcheck.core.config;
 
 import org.reflections.Reflections;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -8,7 +9,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCoreController;
@@ -16,7 +16,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.controller.JsonReacti
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.ThymeleafReactiveDevCheckViewController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.util.DevCheckUtil;
 
-@Configuration(value = "_blueskyBootDevCheckCoreReactiveAutoConfiguration", proxyBeanMethods = false)
+@AutoConfiguration("_blueskyBootDevCheckCoreReactiveAutoConfiguration")
 @ConditionalOnClass({ WebFluxConfigurer.class })
 @ConditionalOnWebApplication(type = Type.REACTIVE)
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true")
