@@ -16,9 +16,10 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
 
 **Prerequisites**
 
-- [Java 11](https://openjdk.java.net/)
-- [Spring Boot 2.5.4](https://spring.io/)
-- [Thymleaf 3.0.12.RELEASE (optional)](https://www.thymeleaf.org/)
+| devCheck | [Java](https://openjdk.java.net/^) | [Spring Boot](https://spring.io/^) |
+| ------------- | ------------- | ------------- |
+| 1.0.1 | 11 | 2.5.4 |
+| 2.0.0 | 17 | 2.7.1 | 
 
 ## settings
 
@@ -37,6 +38,20 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
 ### properties
 
 <!--
+이 라이브러리는 dependency에 추가하면 기본 활성화되어 있습니다.
+
+비개발 환경에서 이 라이브러리의 기능을 비활성화하고 싶은 경우 다음과 같이 설정합니다.
+-->
+
+This library is enabled by default when you add it to your dependency.
+
+If you want to disable the functionality of this library in a non-development environment, set it as follows.
+
+```properties
+bluesky-boot.dev-check.enabled=false
+```
+
+<!--
 지정된 범위에서 utility static method를 검색합니다.
 
 다음과 같이 검사할 패키지를 지정합니다.
@@ -50,18 +65,29 @@ bluesky-boot.dev-check.base-packages=net.luversof
 ```
 
 <!--
-이 라이브러리는 dependency에 추가하면 기본 활성화되어 있습니다.
+devCheck의 기본 주소를 변경하고 싶은 경우 다음과 같이 설정합니다.
 
-비개발 환경에서 이 라이브러리의 기능을 비활성화하고 싶은 경우 다음과 같이 설정합니다.
+기본 값은 `/_check` 입니다.
 -->
 
-This library is enabled by default when you add it to your dependency.
+To change the default address of devCheck, set it like this:
 
-If you want to disable the functionality of this library in a non-development environment, set it as follows.
+The default is `/_check` .
 
 ```properties
-bluesky-boot.dev-check.enabled=false
+bluesky-boot.dev-check.path-prefix=/info/_check
 ```
+
+<--
+path pattern으로 설정할 수도 있습니다.
+-->
+
+You can also set it as a path pattern.
+
+```properties
+bluesky-boot.dev-check.path-prefix=/{somePath}/_check
+```
+
 
 ## usage
 
@@ -86,23 +112,25 @@ Can be used for controller methods and utility static methods.
 <!-- 
 controller bean이 다음 조건을 만족하는 '/_check' page 목록화 대상입니다.
 
-* '@DevCheckController' annotation을 선언
-* produce 속성이 'application/json' 
+* `@DevCheckController` annotation을 선언
+* produce 속성은 `application/json` 
+* path는 `${bluesky-boot.dev-check.path-prefix}` 로 시작하도록 설정
 
 다음과 같이 controller를 생성합니다.
 -->
  
 The controller bean is a '/_check' page listing target that satisfies the following conditions.
 
-* Declare '@DevCheckController' annotation
-* The produce attribute is 'application/json'
+* Declare `@DevCheckController` annotation
+* The produce attribute is `application/json`
+* Set path to start with `${bluesky-boot.dev-check.path-prefix}`
 
 Create a controller like this:
 
 ```java
 @DevCheckController
 @RestController
-@RequestMapping(value = "/_check/core",  produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}/core",  produces = MediaType.APPLICATION_JSON_VALUE)
 public class DevCheckCoreController {
 
 	private ApplicationContext applicationContext;
