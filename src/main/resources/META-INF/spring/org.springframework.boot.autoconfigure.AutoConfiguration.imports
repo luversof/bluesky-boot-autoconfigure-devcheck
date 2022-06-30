@@ -1,0 +1,4 @@
+io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreAutoConfiguration
+io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreServletAutoConfiguration
+io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreReactiveAutoConfiguration
+io.github.luversof.boot.autoconfigure.devcheck.logging.logback.config.LogbackAutoConfiguration

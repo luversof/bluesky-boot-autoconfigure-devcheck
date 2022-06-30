@@ -16,7 +16,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.controller
 import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.service.LogbackAppender;
 import io.github.luversof.boot.autoconfigure.devcheck.logging.logback.service.LogbackAppenderService;
 
-@Configuration("_blueskyBootDevCheckLoggingLogbackAutoConfiguration")
+@Configuration(value = "_blueskyBootDevCheckLoggingLogbackAutoConfiguration", proxyBeanMethods = false)
 @ConditionalOnClass(Appender.class)
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true")
 public class LogbackAutoConfiguration {

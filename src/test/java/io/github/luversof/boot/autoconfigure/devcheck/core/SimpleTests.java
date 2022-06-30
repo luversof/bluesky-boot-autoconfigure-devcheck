@@ -31,4 +31,5 @@ class SimpleTests {
 		DevCheckCoreController devCheckCoreController = new DevCheckCoreController(null);
 		log.debug("test : {}", devCheckCoreController.getClass().isAnnotationPresent(DevCheckController.class));
 	}
+
 }

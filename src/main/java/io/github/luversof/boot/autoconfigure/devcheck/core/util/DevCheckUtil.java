@@ -2,10 +2,12 @@ package io.github.luversof.boot.autoconfigure.devcheck.core.util;
 
 import java.lang.reflect.Method;
 
+import org.reflections.Reflections;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreProperties;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -23,22 +25,34 @@ public final class DevCheckUtil {
 	public static String[] getParameterNames(Method method) {
 		return DISCOVERER.getParameterNames(method);
 	}
+	
+	public static String getUrl(String pathPrefix, String pathPattern) {
+		var pathPrefixParts = pathPrefix.split("/");
+		
+		var targetPathPatternParts = pathPattern.split("/");
+		
+		for (int i = 0 ; i < pathPrefixParts.length ; i++) {
+			 if (!pathPrefixParts[i].equals(targetPathPatternParts[i])) {
+				 targetPathPatternParts[i] = pathPrefixParts[i];
+			 }
+		}
+		return String.join("/", targetPathPatternParts);
+	}
 
 	/**
 	 * In the case of the test url address, if requestPath is set, the corresponding
 	 * path is added.
 	 * 
 	 * @param pathPrefix prefix before path
-	 * @param url        target url
+	 * @param pattern    target url pattern
 	 * @param method     target method
 	 * @return url value including parameters
 	 */
-	public static String getUrlWithParameter(String pathPrefix, String url, Method method) {
+	public static String getUrlWithParameter(String pathPrefix, String pattern, Method method) {
 		var stringBuilder = new StringBuilder();
 		if (StringUtils.hasText(pathPrefix)) {
-			stringBuilder.append(pathPrefix);
+			stringBuilder.append(getUrl(pathPrefix, pattern));
 		}
-		stringBuilder.append(url);
 		appendParameter(stringBuilder, method);
 		return stringBuilder.toString().replace("//", "/");
 	}
@@ -57,4 +71,12 @@ public final class DevCheckUtil {
 			stringBuilder.append(i == 0 ? "?" : "&").append(parameterNames[i]).append("={").append(parameterNames[i]).append("}");
 		}
 	}
+	
+	public static Reflections getReflections(DevCheckCoreProperties devCheckCoreProperties) {
+		if (devCheckCoreProperties.getBasePackages() == null) {
+			return new Reflections("io.github.luversof");
+		}
+		return new Reflections("io.github.luversof", devCheckCoreProperties.getBasePackages());
+	}
+
 }
