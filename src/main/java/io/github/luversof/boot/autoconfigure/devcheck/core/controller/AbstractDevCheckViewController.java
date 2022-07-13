@@ -46,16 +46,16 @@ public abstract class AbstractDevCheckViewController {
 		
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = new HashMap<>();
 		
-		requestMappingHandlerMappingMap.forEach((key, requestMappingHandlerMapping) -> {
-			handlerMethodMap.putAll(getHandlerMethodMap(requestMappingHandlerMapping));	
-		});
+		requestMappingHandlerMappingMap.forEach((key, requestMappingHandlerMapping) ->
+			handlerMethodMap.putAll(getHandlerMethodMap(requestMappingHandlerMapping))	
+		);
 
 		List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
 		handlerMethodMap.entrySet().forEach(map -> {
 			if ((!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
 				devCheckInfoList.add(new DevCheckInfo(getPathPrefix(), map));
 		});
-		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::getBeanName).thenComparing(devCheckInfo -> devCheckInfo.getUrlList().get(0))).collect(Collectors.toList());
+		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::getBeanName).thenComparing(devCheckInfo -> devCheckInfo.getUrlList().get(0))).toList();
 	}
 	
 	private Map<RequestMappingInfo, HandlerMethod> getHandlerMethodMap(RequestMappingHandlerMapping requestMappingHandlerMapping) {

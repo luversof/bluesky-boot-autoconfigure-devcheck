@@ -27,7 +27,8 @@ public class DevCheckInfo extends AbstractDevCheckInfo<RequestMappingInfo> {
 			for (String url : patternsCondition.getPatterns()) {
 				getUrlList().add(DevCheckUtil.getUrlWithParameter(pathPrefix, url, handlerMethodMap.getValue().getMethod()));
 			}
-		} else if (pathPatternsCondition != null) {
+		} 
+		if (pathPatternsCondition != null) {
 			for (PathPattern pattern : pathPatternsCondition.getPatterns()) {
 				getUrlList().add(DevCheckUtil.getUrlWithParameter(pathPrefix, pattern.getPatternString(), handlerMethodMap.getValue().getMethod()));
 			}

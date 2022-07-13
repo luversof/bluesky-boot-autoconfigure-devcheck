@@ -16,10 +16,8 @@ public class ReactiveDevCheckInfo extends AbstractDevCheckInfo<RequestMappingInf
 		setBeanName(handlerMethodMap.getValue().getBean().toString());
 		setUrlList(new ArrayList<>());
 		var patternsCondition = handlerMethodMap.getKey().getPatternsCondition();
-		if (patternsCondition != null) {
-			for (PathPattern pathPattern : patternsCondition.getPatterns()) {
-				getUrlList().add(DevCheckUtil.getUrlWithParameter(pathPrefix, pathPattern.getPatternString(), handlerMethodMap.getValue().getMethod()));
-			}
+		for (PathPattern pathPattern : patternsCondition.getPatterns()) {
+			getUrlList().add(DevCheckUtil.getUrlWithParameter(pathPrefix, pathPattern.getPatternString(), handlerMethodMap.getValue().getMethod()));
 		}
 		setHandlerMethodMap(handlerMethodMap);
 		var methodAnnotation = handlerMethodMap.getValue().getMethodAnnotation(DevCheckDescription.class);

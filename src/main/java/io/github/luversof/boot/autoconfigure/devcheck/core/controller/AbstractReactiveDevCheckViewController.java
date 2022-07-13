@@ -47,7 +47,7 @@ public abstract class AbstractReactiveDevCheckViewController {
 			if (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable()))
 				devCheckInfoList.add(new ReactiveDevCheckInfo(getPathPrefix(exchange), map));
 		});
-		return devCheckInfoList.stream().sorted(Comparator.comparing(ReactiveDevCheckInfo::getBeanName).thenComparing(reactiveDevCheckInfo -> reactiveDevCheckInfo.getUrlList().get(0))).collect(Collectors.toList());
+		return devCheckInfoList.stream().sorted(Comparator.comparing(ReactiveDevCheckInfo::getBeanName).thenComparing(reactiveDevCheckInfo -> reactiveDevCheckInfo.getUrlList().get(0))).toList();
 	}
 
 	protected List<DevCheckUtilInfo> getDevCheckUtilInfoList() {
