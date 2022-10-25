@@ -91,7 +91,7 @@ body { margin: 0; padding: 0;}
                 </th:block>
             </span>
             <span class="url">
-                <a target="_blank" th:each="url : ${devCheckInfo.urlList}" th:href="@{${url}}" th:text="@{${url}}"></a>
+                <a target="_blank" th:each="url : ${devCheckInfo.urlList}" th:href="${url}" th:text="${url}"></a>
             </span>
         </li>
     </ul>
