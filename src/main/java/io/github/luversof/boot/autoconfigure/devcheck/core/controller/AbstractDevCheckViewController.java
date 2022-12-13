@@ -38,7 +38,12 @@ public abstract class AbstractDevCheckViewController {
 	
 	protected String getPathPrefix() {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		return request.getRequestURI().replace("/index", "").replace("/util", "");
+		return request.getRequestURI().replace(request.getContextPath(), "").replace("/index", "").replace("/util", "");
+	}
+	
+	protected String getContextPath() {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		return request.getContextPath();
 	}
 
 	protected List<DevCheckInfo> getDevCheckInfoList() {
@@ -53,7 +58,7 @@ public abstract class AbstractDevCheckViewController {
 		List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
 		handlerMethodMap.entrySet().forEach(map -> {
 			if ((!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
-				devCheckInfoList.add(new DevCheckInfo(getPathPrefix(), map));
+				devCheckInfoList.add(new DevCheckInfo(getContextPath(), getPathPrefix(), map));
 		});
 		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::getBeanName).thenComparing(devCheckInfo -> devCheckInfo.getUrlList().get(0))).toList();
 	}

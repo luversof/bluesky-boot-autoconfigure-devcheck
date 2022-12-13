@@ -13,7 +13,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.util.DevCheckUtil;
 
 public class DevCheckInfo extends AbstractDevCheckInfo<RequestMappingInfo> {
 
-	public DevCheckInfo(String pathPrefix, Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
+	public DevCheckInfo(String contextPath, String pathPrefix, Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
 		setBeanName(handlerMethodMap.getValue().getBean().toString());
 		setUrlList(new ArrayList<>());
 		var patternsCondition = handlerMethodMap.getKey().getPatternsCondition();
@@ -25,12 +25,12 @@ public class DevCheckInfo extends AbstractDevCheckInfo<RequestMappingInfo> {
 		
 		if (patternsCondition != null) {
 			for (String url : patternsCondition.getPatterns()) {
-				getUrlList().add(DevCheckUtil.getUrlWithParameter(pathPrefix, url, handlerMethodMap.getValue().getMethod()));
+				getUrlList().add(DevCheckUtil.getUrlWithParameter(contextPath, pathPrefix, url, handlerMethodMap.getValue().getMethod()));
 			}
 		} 
 		if (pathPatternsCondition != null) {
 			for (PathPattern pattern : pathPatternsCondition.getPatterns()) {
-				getUrlList().add(DevCheckUtil.getUrlWithParameter(pathPrefix, pattern.getPatternString(), handlerMethodMap.getValue().getMethod()));
+				getUrlList().add(DevCheckUtil.getUrlWithParameter(contextPath, pathPrefix, pattern.getPatternString(), handlerMethodMap.getValue().getMethod()));
 			}
 		}
 		setHandlerMethodMap(handlerMethodMap);

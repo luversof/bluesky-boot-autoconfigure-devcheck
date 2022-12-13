@@ -30,7 +30,11 @@ public abstract class AbstractReactiveDevCheckViewController {
 	private final Reflections reflections;
 
 	protected String getPathPrefix(ServerWebExchange exchange) {
-		return exchange.getRequest().getURI().toString().replace("/index", "").replace("/util", "");
+		return exchange.getRequest().getURI().toString().replace(exchange.getRequest().getPath().contextPath().value(), "").replace("/index", "").replace("/util", "");
+	}
+	
+	protected String getContextPath(ServerWebExchange exchange) {
+		return exchange.getRequest().getPath().contextPath().value();
 	}
 
 	protected List<ReactiveDevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
@@ -45,7 +49,7 @@ public abstract class AbstractReactiveDevCheckViewController {
 		List<ReactiveDevCheckInfo> devCheckInfoList = new ArrayList<>();
 		handlerMethodMap.entrySet().forEach(map -> {
 			if (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable()))
-				devCheckInfoList.add(new ReactiveDevCheckInfo(getPathPrefix(exchange), map));
+				devCheckInfoList.add(new ReactiveDevCheckInfo(getContextPath(exchange), getPathPrefix(exchange), map));
 		});
 		return devCheckInfoList.stream().sorted(Comparator.comparing(ReactiveDevCheckInfo::getBeanName).thenComparing(reactiveDevCheckInfo -> reactiveDevCheckInfo.getUrlList().get(0))).toList();
 	}

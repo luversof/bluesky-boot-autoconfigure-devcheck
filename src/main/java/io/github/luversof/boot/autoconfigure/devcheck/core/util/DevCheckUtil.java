@@ -26,7 +26,7 @@ public final class DevCheckUtil {
 		return DISCOVERER.getParameterNames(method);
 	}
 	
-	public static String getUrl(String pathPrefix, String pathPattern) {
+	public static String getUrl(String contextPath, String pathPrefix, String pathPattern) {
 		var pathPrefixParts = pathPrefix.split("/");
 		
 		var targetPathPatternParts = pathPattern.split("/");
@@ -36,7 +36,7 @@ public final class DevCheckUtil {
 				 targetPathPatternParts[i] = pathPrefixParts[i];
 			 }
 		}
-		return String.join("/", targetPathPatternParts);
+		return contextPath + String.join("/", targetPathPatternParts);
 	}
 
 	/**
@@ -48,10 +48,10 @@ public final class DevCheckUtil {
 	 * @param method     target method
 	 * @return url value including parameters
 	 */
-	public static String getUrlWithParameter(String pathPrefix, String pattern, Method method) {
+	public static String getUrlWithParameter(String contextPath, String pathPrefix, String pattern, Method method) {
 		var stringBuilder = new StringBuilder();
 		if (StringUtils.hasText(pathPrefix)) {
-			stringBuilder.append(getUrl(pathPrefix, pattern));
+			stringBuilder.append(getUrl(contextPath, pathPrefix, pattern));
 		}
 		appendParameter(stringBuilder, method);
 		return stringBuilder.toString().replace("//", "/");
