@@ -1,6 +1,5 @@
 package io.github.luversof.boot.autoconfigure.devcheck.core.config;
 
-import javax.servlet.Servlet;
 
 import org.reflections.Reflections;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -17,6 +16,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCo
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.JsonDevCheckViewController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.controller.ThymeleafDevCheckViewController;
 import io.github.luversof.boot.autoconfigure.devcheck.core.util.DevCheckUtil;
+import jakarta.servlet.Servlet;
 
 @AutoConfiguration("_blueskyBootDevCheckCoreServletAutoConfiguration")
 @ConditionalOnClass({ Servlet.class, DispatcherServlet.class })

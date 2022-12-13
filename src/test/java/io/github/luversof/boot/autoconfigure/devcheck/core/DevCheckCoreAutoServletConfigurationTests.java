@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 class DevCheckCoreAutoServletConfigurationTests {
 	
 	private final WebApplicationContextRunner contextRunner = new WebApplicationContextRunner()
-			.withInitializer(new ConditionEvaluationReportLoggingListener(LogLevel.INFO))
+			.withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))
 			.withPropertyValues(BASE_PROPERTY)
 			.withConfiguration(AutoConfigurations.of(DEVCHECK_SERVLET_CONFIGURATION))
 			.withUserConfiguration(DEVCHECK_CORE_SERVLET_USER_CONFIGURATION)

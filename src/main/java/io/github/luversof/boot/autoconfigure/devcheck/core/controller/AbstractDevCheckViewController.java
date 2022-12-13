@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +26,7 @@ import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckUt
 import io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreProperties;
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckInfo;
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckUtilInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

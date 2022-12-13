@@ -2,7 +2,6 @@ package io.github.luversof.boot.autoconfigure.devcheck.core.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckInfo;
 import io.github.luversof.boot.autoconfigure.devcheck.core.domain.DevCheckUtilInfo;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}", produces = MediaType.APPLICATION_JSON_VALUE)
