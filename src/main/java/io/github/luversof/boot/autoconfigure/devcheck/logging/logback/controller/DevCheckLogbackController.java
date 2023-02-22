@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @DevCheckController
 @RestController
-@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}/logging/logback", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}/blueskyDevCheck/logging/logback", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DevCheckLogbackController {
 
 	private final LogbackAppenderService<ILoggingEvent> blueskyLogbackAppenderService;
