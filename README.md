@@ -8,17 +8,17 @@ bluesky-boot-autoconfigure-devcheck는 Spring Boot 기반 프로젝트에서 개
 Thymeleaf를 사용하는 경우 Thymeleaf UI 기반으로 목록이 제공되며 그 외의 경우 JSON으로 목록을 제공합니다.
 -->
 
-bluesky-boot-autoconfigure-devcheck is a library that helps you to check the list of controller methods and commonly used utility static methods for developer checking that are made to check the development contents in Spring Boot-based projects.
+bluesky-boot-autoconfigure-devcheck is a library that helps you check the list of controller methods for developer checks and the list of commonly used utility static methods that Spring Boot-based projects create to check their development.
 
-You can check the list of controller methods for development check at `/_check` and the list of utility static methods at `/_check/util`.
+The list of controller methods for development checks can be found in `/_check` and the list of utility static methods can be found in `/_check/util`.
 
-If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, otherwise as JSON.
+If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, otherwise the list is provided in JSON.
 
 **Prerequisites**
 
 - [Java 17](https://openjdk.java.net/)
-- [Spring Boot 2.7.1](https://spring.io/)
-- [Thymleaf 3.0.15.RELEASE (optional)](https://www.thymeleaf.org/)
+- [Spring Boot 3.1.0](https://spring.io/)
+- [Thymleaf 3.1.1.RELEASE (optional)](https://www.thymeleaf.org/)
 
 ## settings
 
@@ -29,7 +29,7 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
     <dependency>
         <groupId>io.github.luversof</groupId>
         <artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
-        <version>2.0.0</version>
+        <version>3.1.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -39,12 +39,13 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
 <!--
 이 라이브러리는 dependency에 추가하면 기본 활성화되어 있습니다.
 
-비개발 환경에서 이 라이브러리의 기능을 비활성화하고 싶은 경우 다음과 같이 설정합니다.
+라이브 서비스 환경에서 이 라이브러리의 기능을 비활성화하고 싶은 경우 다음과 같이 설정합니다.
 -->
 
-This library is enabled by default when you add it to your dependency.
+This library is enabled by default when you add it to a dependency.
 
-If you want to disable the functionality of this library in a non-development environment, set it as follows.
+If you want to disable the functionality of this library in your live service environment, set it up as follows
+
 
 ```properties
 bluesky-boot.dev-check.enabled=false
@@ -57,7 +58,8 @@ bluesky-boot.dev-check.enabled=false
 -->
 Searches for utility static methods in the specified scope.
 
-Specifies the packages to scan as follows:
+Specify the packages to be scanned as follows:
+
 
 ```properties
 bluesky-boot.dev-check.base-packages=net.luversof
@@ -69,9 +71,10 @@ devCheck의 기본 주소를 변경하고 싶은 경우 다음과 같이 설정�
 기본 값은 `/_check` 입니다.
 -->
 
-To change the default address of devCheck, set it like this:
+If you want to change the default address for devCheck, set it as follows.
 
-The default is `/_check`.
+The default value is `/_check`.
+
 
 ```properties
 bluesky-boot.dev-check.path-prefix=/info/_check
@@ -81,7 +84,8 @@ bluesky-boot.dev-check.path-prefix=/info/_check
 path pattern으로 설정할 수도 있습니다.
 -->
 
-You can also set it as a path pattern.
+You can also set it to a path pattern.
+
 
 ```properties
 bluesky-boot.dev-check.path-prefix=/{somePath}/_check
@@ -97,9 +101,10 @@ bluesky-boot.dev-check.path-prefix=/{somePath}/_check
 
 controller method와 utility static method에 사용할 수 있습니다.
 -->
-DevCheckDescription annotation is used to indicate the description of the method in the `/_check` page.
+Use the DevCheckDescription annotation to represent a description of the method on the `/_check` page.
 
-Can be used for controller methods and utility static methods.
+It can be used for controller methods and utility static methods.
+
 
 | attribute  | description |
 | ------------- | ------------- |
@@ -118,11 +123,11 @@ controller bean이 다음 조건을 만족하는 `/_check` page 목록화 대상
 다음과 같이 controller를 생성합니다.
 -->
  
-The controller bean is a `/_check` page listing target that satisfies the following conditions.
+The controller bean is the target of the `/_check` page listing that satisfies the following conditions.
 
-* Declare `@DevCheckController` annotation
-* The produce attribute is `application/json`
-* Set path to start with `${bluesky-boot.dev-check.path-prefix}`
+* Declare the `@DevCheckController` annotation
+* The produce attribute is set to `application/json` 
+* Set the path to start with `${bluesky-boot.dev-check.path-prefix}`.
 
 Create a controller like this:
 
@@ -152,7 +157,7 @@ public class DevCheckCoreController {
 아래와 같이 해당 controller의 getMapping method가 `/_check` 목록에 추가됩니다.
 -->
 
-The getMapping method of the controller is added to the `/_check` list as shown below.
+The getMapping method of that controller is added to the `/_check` list, as shown below.
 
 ![_check](./_check.png)
 
@@ -165,7 +170,7 @@ The getMapping method of the controller is added to the `/_check` list as shown 
 다음과 같이 사용합니다.
 -->
 
-Declare @DevCheckUtil or @ReactiveDevCheckUtil annotation in the utility class to be added to the `/_check/util` list.
+Declare the @DevCheckUtil or @ReactiveDevCheckUtil annotation on the utility class you want to add to the `/_check/util` list.
 
 Use it like this:
 
@@ -198,7 +203,7 @@ public class UserUtil extends RequestAttributeUtil {
 아래와 같이 해당 utility static method가 `/_check/util` 목록에 추가됩니다.
 -->
 
-The utility static method is added to the `/_check/util` list as shown below.
+The corresponding utility static method is added to the `/_check/util` list, as shown below.
 
 ![_check](./_checkUtil.png)
 
@@ -209,3 +214,4 @@ The utility static method is added to the `/_check/util` list as shown below.
 | 1.0.1 | Java 11, Spring Boot 2.5.4 |
 | 1.0.2 | Java 11, Spring Boot 2.6.1 |
 | 2.0.0 | Java 17, Spring Boot 2.7.1 |
+| 3.1.0 | Java 17, Spring Boot 3.1.0 |
