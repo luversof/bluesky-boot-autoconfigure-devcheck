@@ -29,7 +29,7 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
     <dependency>
         <groupId>io.github.luversof</groupId>
         <artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
+        <version>3.1.0</version>
     </dependency>
 </dependencies>
 ```
