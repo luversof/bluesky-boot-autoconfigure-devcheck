@@ -12,7 +12,7 @@ import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCoreController;
+import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

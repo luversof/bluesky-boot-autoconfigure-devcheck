@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
-import io.github.luversof.boot.autoconfigure.devcheck.core.config.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
 
 class DevCheckCoreAutoConfigurationTests {
 

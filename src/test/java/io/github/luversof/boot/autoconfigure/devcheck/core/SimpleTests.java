@@ -4,8 +4,8 @@ import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.luversof.boot.autoconfigure.devcheck.core.annotation.DevCheckController;
-import io.github.luversof.boot.autoconfigure.devcheck.core.controller.DevCheckCoreController;
+import io.github.luversof.boot.devcheck.annotation.DevCheckController;
+import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
