@@ -1,4 +1,4 @@
-package io.github.luversof.boot.devcheck.controller;
+package io.github.luversof.boot.devcheck.controller.reactive;
 
 import org.reflections.Reflections;
 import org.springframework.stereotype.Controller;
@@ -11,9 +11,9 @@ import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}")
-public class ThymeleafReactiveDevCheckViewController extends AbstractReactiveDevCheckViewController {
+public class ThymeleafWebFluxDevCheckViewController extends AbstractWebFluxDevCheckViewController {
 
-	public ThymeleafReactiveDevCheckViewController(Reflections reflections) {
+	public ThymeleafWebFluxDevCheckViewController(Reflections reflections) {
 		super(reflections);
 	}
 

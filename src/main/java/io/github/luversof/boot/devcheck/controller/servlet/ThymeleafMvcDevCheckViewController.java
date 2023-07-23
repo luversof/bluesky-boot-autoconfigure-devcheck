@@ -1,4 +1,4 @@
-package io.github.luversof.boot.devcheck.controller;
+package io.github.luversof.boot.devcheck.controller.servlet;
 
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}")
-public class ThymeleafDevCheckViewController extends AbstractDevCheckViewController {
+public class ThymeleafMvcDevCheckViewController extends AbstractMvcDevCheckViewController {
 
-	public ThymeleafDevCheckViewController(ApplicationContext applicationContext, Reflections reflections) {
+	public ThymeleafMvcDevCheckViewController(ApplicationContext applicationContext, Reflections reflections) {
 		super(applicationContext, reflections);
 	}
 

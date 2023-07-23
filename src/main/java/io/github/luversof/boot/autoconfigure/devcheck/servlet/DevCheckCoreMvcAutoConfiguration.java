@@ -14,8 +14,8 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
 import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
-import io.github.luversof.boot.devcheck.controller.JsonDevCheckViewController;
-import io.github.luversof.boot.devcheck.controller.ThymeleafDevCheckViewController;
+import io.github.luversof.boot.devcheck.controller.servlet.JsonMvcDevCheckViewController;
+import io.github.luversof.boot.devcheck.controller.servlet.ThymeleafMvcDevCheckViewController;
 import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 import jakarta.servlet.Servlet;
 
@@ -27,16 +27,16 @@ public class DevCheckCoreMvcAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
-    ThymeleafDevCheckViewController blueskyBootThymeleafDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
+    ThymeleafMvcDevCheckViewController blueskyBootThymeleafDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		return new ThymeleafDevCheckViewController(applicationContext, reflections);
+		return new ThymeleafMvcDevCheckViewController(applicationContext, reflections);
 	}
 
     @Bean
     @ConditionalOnMissingBean(name = "blueskyBootThymeleafDevCheckViewController")
-    JsonDevCheckViewController blueskyBootJsonDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
+    JsonMvcDevCheckViewController blueskyBootJsonDevCheckViewController(ApplicationContext applicationContext, DevCheckCoreProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		return new JsonDevCheckViewController(applicationContext, reflections);
+		return new JsonMvcDevCheckViewController(applicationContext, reflections);
 	}
 
     @Bean

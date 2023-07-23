@@ -13,8 +13,8 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
 import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
-import io.github.luversof.boot.devcheck.controller.JsonReactiveDevCheckViewController;
-import io.github.luversof.boot.devcheck.controller.ThymeleafReactiveDevCheckViewController;
+import io.github.luversof.boot.devcheck.controller.reactive.JsonWebFluxDevCheckViewController;
+import io.github.luversof.boot.devcheck.controller.reactive.ThymeleafWebFluxDevCheckViewController;
 import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 
 @AutoConfiguration("_blueskyBootDevCheckCoreReactiveAutoConfiguration")
@@ -25,16 +25,16 @@ public class DevCheckCoreWebFluxAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
-    ThymeleafReactiveDevCheckViewController blueskyBootThymeleafReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
+    ThymeleafWebFluxDevCheckViewController blueskyBootThymeleafReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		return new ThymeleafReactiveDevCheckViewController(reflections);
+		return new ThymeleafWebFluxDevCheckViewController(reflections);
 	}
 
     @Bean
     @ConditionalOnMissingBean(name = "blueskyBootThymeleafReactiveDevCheckViewController")
-    JsonReactiveDevCheckViewController blueskyBootJsonReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
+    JsonWebFluxDevCheckViewController blueskyBootJsonReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		return new JsonReactiveDevCheckViewController(reflections);
+		return new JsonWebFluxDevCheckViewController(reflections);
 	}
 
     @Bean

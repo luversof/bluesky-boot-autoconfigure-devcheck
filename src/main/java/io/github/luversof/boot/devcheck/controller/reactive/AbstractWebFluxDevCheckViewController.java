@@ -1,4 +1,4 @@
-package io.github.luversof.boot.devcheck.controller;
+package io.github.luversof.boot.devcheck.controller.reactive;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import io.github.luversof.boot.devcheck.annotation.DevCheckController;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 import io.github.luversof.boot.devcheck.annotation.ReactiveDevCheckUtil;
 import io.github.luversof.boot.devcheck.domain.DevCheckUtilInfo;
-import io.github.luversof.boot.devcheck.domain.ReactiveDevCheckInfo;
+import io.github.luversof.boot.devcheck.domain.reactive.WebFluxDevCheckInfo;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public abstract class AbstractReactiveDevCheckViewController {
+public abstract class AbstractWebFluxDevCheckViewController {
 
 	private final Reflections reflections;
 
@@ -37,7 +37,7 @@ public abstract class AbstractReactiveDevCheckViewController {
 		return exchange.getRequest().getPath().contextPath().value();
 	}
 
-	protected List<ReactiveDevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
+	protected List<WebFluxDevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
 		var devCheckCoreProperties = exchange.getApplicationContext().getBean(DevCheckCoreProperties.class);
 		
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = exchange.getApplicationContext().getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class).getHandlerMethods().entrySet().stream()
@@ -46,12 +46,12 @@ public abstract class AbstractReactiveDevCheckViewController {
 						&& handlerMapping.getKey().getProducesCondition().getExpressions().stream().anyMatch(mediaTypeExpression -> mediaTypeExpression.getMediaType().equals(MediaType.APPLICATION_JSON)))
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 
-		List<ReactiveDevCheckInfo> devCheckInfoList = new ArrayList<>();
+		List<WebFluxDevCheckInfo> devCheckInfoList = new ArrayList<>();
 		handlerMethodMap.entrySet().forEach(map -> {
 			if (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable()))
-				devCheckInfoList.add(new ReactiveDevCheckInfo(getContextPath(exchange), getPathPrefix(exchange), map));
+				devCheckInfoList.add(new WebFluxDevCheckInfo(getContextPath(exchange), getPathPrefix(exchange), map));
 		});
-		return devCheckInfoList.stream().sorted(Comparator.comparing(ReactiveDevCheckInfo::getBeanName).thenComparing(reactiveDevCheckInfo -> reactiveDevCheckInfo.getUrlList().get(0))).toList();
+		return devCheckInfoList.stream().sorted(Comparator.comparing(WebFluxDevCheckInfo::getBeanName).thenComparing(reactiveDevCheckInfo -> reactiveDevCheckInfo.getUrlList().get(0))).toList();
 	}
 
 	protected List<DevCheckUtilInfo> getDevCheckUtilInfoList() {

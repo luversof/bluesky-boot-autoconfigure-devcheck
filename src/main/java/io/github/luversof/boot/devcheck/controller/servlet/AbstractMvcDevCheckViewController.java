@@ -1,4 +1,4 @@
-package io.github.luversof.boot.devcheck.controller;
+package io.github.luversof.boot.devcheck.controller.servlet;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -6,10 +6,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
-
 
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
@@ -24,13 +23,13 @@ import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
 import io.github.luversof.boot.devcheck.annotation.DevCheckController;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 import io.github.luversof.boot.devcheck.annotation.DevCheckUtil;
-import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
 import io.github.luversof.boot.devcheck.domain.DevCheckUtilInfo;
+import io.github.luversof.boot.devcheck.domain.servlet.MvcDevCheckInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public abstract class AbstractDevCheckViewController {
+public abstract class AbstractMvcDevCheckViewController {
 
 	private final ApplicationContext applicationContext;
 
@@ -46,7 +45,7 @@ public abstract class AbstractDevCheckViewController {
 		return request.getContextPath();
 	}
 
-	protected List<DevCheckInfo> getDevCheckInfoList() {
+	protected List<MvcDevCheckInfo> getDevCheckInfoList() {
 		var requestMappingHandlerMappingMap = applicationContext.getBeansOfType(RequestMappingHandlerMapping.class);
 		
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = new HashMap<>();
@@ -55,12 +54,12 @@ public abstract class AbstractDevCheckViewController {
 			handlerMethodMap.putAll(getHandlerMethodMap(requestMappingHandlerMapping))	
 		);
 
-		List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
+		List<MvcDevCheckInfo> devCheckInfoList = new ArrayList<>();
 		handlerMethodMap.entrySet().forEach(map -> {
 			if ((!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
-				devCheckInfoList.add(new DevCheckInfo(getContextPath(), getPathPrefix(), map));
+				devCheckInfoList.add(new MvcDevCheckInfo(getContextPath(), getPathPrefix(), map));
 		});
-		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::getBeanName).thenComparing(devCheckInfo -> devCheckInfo.getUrlList().get(0))).toList();
+		return devCheckInfoList.stream().sorted(Comparator.comparing(MvcDevCheckInfo::getBeanName).thenComparing(devCheckInfo -> devCheckInfo.getUrlList().get(0))).toList();
 	}
 	
 	private Map<RequestMappingInfo, HandlerMethod> getHandlerMethodMap(RequestMappingHandlerMapping requestMappingHandlerMapping) {

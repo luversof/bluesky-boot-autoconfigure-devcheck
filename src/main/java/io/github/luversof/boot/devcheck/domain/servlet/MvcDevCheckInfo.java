@@ -1,4 +1,4 @@
-package io.github.luversof.boot.devcheck.domain;
+package io.github.luversof.boot.devcheck.domain.servlet;
 
 import java.util.ArrayList;
 import java.util.Map.Entry;
@@ -9,11 +9,12 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.util.pattern.PathPattern;
 
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
+import io.github.luversof.boot.devcheck.domain.AbstractDevCheckInfo;
 import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 
-public class DevCheckInfo extends AbstractDevCheckInfo<RequestMappingInfo> {
+public class MvcDevCheckInfo extends AbstractDevCheckInfo<RequestMappingInfo> {
 
-	public DevCheckInfo(String contextPath, String pathPrefix, Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
+	public MvcDevCheckInfo(String contextPath, String pathPrefix, Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
 		setBeanName(handlerMethodMap.getValue().getBean().toString());
 		setUrlList(new ArrayList<>());
 		var patternsCondition = handlerMethodMap.getKey().getPatternsCondition();
