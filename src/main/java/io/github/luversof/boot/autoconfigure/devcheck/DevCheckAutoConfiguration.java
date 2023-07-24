@@ -9,14 +9,14 @@ import org.springframework.context.annotation.PropertySource;
 import io.github.luversof.boot.devcheck.aspect.DevCheckControllerAspect;
 
 @AutoConfiguration("_blueskyBootDevCheckCoreAutoConfiguration")
-@EnableConfigurationProperties(DevCheckCoreProperties.class)
+@EnableConfigurationProperties(DevCheckProperties.class)
 @PropertySource("classpath:dev-check.properties")
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class DevCheckCoreAutoConfiguration {
+public class DevCheckAutoConfiguration {
 	
 	@Bean
-	DevCheckControllerAspect devCheckControllerAspect(DevCheckCoreProperties devCheckCoreProperties) {
-		return new DevCheckControllerAspect(devCheckCoreProperties);
+	DevCheckControllerAspect devCheckControllerAspect(DevCheckProperties devCheckProperties) {
+		return new DevCheckControllerAspect(devCheckProperties);
 	}
 
 }

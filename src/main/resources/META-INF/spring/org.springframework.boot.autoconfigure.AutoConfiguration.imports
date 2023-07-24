@@ -1,4 +1,4 @@
-io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreAutoConfiguration
-io.github.luversof.boot.autoconfigure.devcheck.servlet.DevCheckCoreMvcAutoConfiguration
-io.github.luversof.boot.autoconfigure.devcheck.reactive.DevCheckCoreWebFluxAutoConfiguration
+io.github.luversof.boot.autoconfigure.devcheck.DevCheckAutoConfiguration
+io.github.luversof.boot.autoconfigure.devcheck.servlet.DevCheckMvcAutoConfiguration
+io.github.luversof.boot.autoconfigure.devcheck.reactive.DevCheckWebFluxAutoConfiguration
 io.github.luversof.boot.autoconfigure.devcheck.logging.logback.LogbackAutoConfiguration

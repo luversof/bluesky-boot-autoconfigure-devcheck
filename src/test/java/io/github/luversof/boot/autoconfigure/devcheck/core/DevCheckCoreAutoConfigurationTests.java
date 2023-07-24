@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
-import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckProperties;
 
 class DevCheckCoreAutoConfigurationTests {
 
@@ -19,7 +19,7 @@ class DevCheckCoreAutoConfigurationTests {
 	@Test
 	void hasDevCheckCoreProperties() {
 		this.contextRunner.run(context -> {
-			assertThat(context).hasSingleBean(DevCheckCoreProperties.class);
+			assertThat(context).hasSingleBean(DevCheckProperties.class);
 		});
 	}
 }

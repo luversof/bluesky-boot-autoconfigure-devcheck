@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
 import io.github.luversof.boot.devcheck.controller.reactive.JsonWebFluxDevCheckViewController;
 import io.github.luversof.boot.devcheck.controller.reactive.ThymeleafWebFluxDevCheckViewController;
@@ -21,18 +21,18 @@ import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 @ConditionalOnClass({ WebFluxConfigurer.class })
 @ConditionalOnWebApplication(type = Type.REACTIVE)
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class DevCheckCoreWebFluxAutoConfiguration {
+public class DevCheckWebFluxAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
-    ThymeleafWebFluxDevCheckViewController blueskyBootThymeleafReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
+    ThymeleafWebFluxDevCheckViewController blueskyBootThymeleafReactiveDevCheckViewController(DevCheckProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
 		return new ThymeleafWebFluxDevCheckViewController(reflections);
 	}
 
     @Bean
     @ConditionalOnMissingBean(name = "blueskyBootThymeleafReactiveDevCheckViewController")
-    JsonWebFluxDevCheckViewController blueskyBootJsonReactiveDevCheckViewController(DevCheckCoreProperties devCheckCoreProperties) {
+    JsonWebFluxDevCheckViewController blueskyBootJsonReactiveDevCheckViewController(DevCheckProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
 		return new JsonWebFluxDevCheckViewController(reflections);
 	}

@@ -7,7 +7,7 @@ import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckProperties;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -72,7 +72,7 @@ public final class DevCheckUtil {
 		}
 	}
 	
-	public static Reflections getReflections(DevCheckCoreProperties devCheckCoreProperties) {
+	public static Reflections getReflections(DevCheckProperties devCheckCoreProperties) {
 		if (devCheckCoreProperties.getBasePackages() == null) {
 			return new Reflections("io.github.luversof");
 		}

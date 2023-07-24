@@ -11,7 +11,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.annotation.DevCheckController;
 
 public class MvcDevCheckService {
@@ -43,7 +43,7 @@ public class MvcDevCheckService {
 	private Map<RequestMappingInfo, HandlerMethod> getTargetHandlerMethodMap() {
 		var handlerMethodMap = getHandlerMethodMap();
 		
-		var devCheckCoreProperties = applicationContext.getBean(DevCheckCoreProperties.class);
+		var devCheckCoreProperties = applicationContext.getBean(DevCheckProperties.class);
 		
 		return handlerMethodMap.entrySet().stream()
 		.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)

@@ -19,7 +19,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.annotation.DevCheckController;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 import io.github.luversof.boot.devcheck.annotation.DevCheckUtil;
@@ -63,7 +63,7 @@ public abstract class AbstractMvcDevCheckViewController {
 	}
 	
 	private Map<RequestMappingInfo, HandlerMethod> getHandlerMethodMap(RequestMappingHandlerMapping requestMappingHandlerMapping) {
-		var devCheckCoreProperties = applicationContext.getBean(DevCheckCoreProperties.class);
+		var devCheckCoreProperties = applicationContext.getBean(DevCheckProperties.class);
 		
 		return requestMappingHandlerMapping.getHandlerMethods().entrySet().stream()
 				.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)

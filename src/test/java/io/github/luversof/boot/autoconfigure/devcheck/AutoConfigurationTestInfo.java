@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConf
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 
-import io.github.luversof.boot.autoconfigure.devcheck.servlet.DevCheckCoreMvcAutoConfiguration;
+import io.github.luversof.boot.autoconfigure.devcheck.servlet.DevCheckMvcAutoConfiguration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -18,9 +18,9 @@ public final class AutoConfigurationTestInfo {
 
 	public static Class<?>[] DEVCHECK_SERVLET_CONFIGURATION = new Class<?>[] { WebMvcAutoConfiguration.class, DispatcherServletAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, PropertyPlaceholderAutoConfiguration.class };
 
-	public static Class<?>[] DEVCHECK_CORE_USER_CONFIGURATION = new Class<?>[] { DevCheckCoreAutoConfiguration.class };
+	public static Class<?>[] DEVCHECK_CORE_USER_CONFIGURATION = new Class<?>[] { DevCheckAutoConfiguration.class };
 
-	public static Class<?>[] DEVCHECK_CORE_SERVLET_USER_CONFIGURATION = addClassAll(DEVCHECK_CORE_USER_CONFIGURATION, DevCheckCoreMvcAutoConfiguration.class);
+	public static Class<?>[] DEVCHECK_CORE_SERVLET_USER_CONFIGURATION = addClassAll(DEVCHECK_CORE_USER_CONFIGURATION, DevCheckMvcAutoConfiguration.class);
 
 	@SuppressWarnings("unused")
 	private static String[] addAll(String[] target, String... strings) {

@@ -4,16 +4,16 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.exception.DevCheckException;
 
 @Aspect
 public class DevCheckControllerAspect {
 	
-	private DevCheckCoreProperties devCheckCoreProperties;
+	private DevCheckProperties devCheckCoreProperties;
 	
-	public DevCheckControllerAspect(DevCheckCoreProperties devCheckCoreProperties) {
-		this.devCheckCoreProperties = devCheckCoreProperties;
+	public DevCheckControllerAspect(DevCheckProperties devCheckProperties) {
+		this.devCheckCoreProperties = devCheckProperties;
 	}
 	
 	@Around("@within(io.github.luversof.boot.devcheck.annotation.DevCheckController)")

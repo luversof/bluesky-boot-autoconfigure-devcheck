@@ -16,7 +16,7 @@ import org.springframework.web.reactive.result.method.RequestMappingInfo;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.server.ServerWebExchange;
 
-import io.github.luversof.boot.autoconfigure.devcheck.DevCheckCoreProperties;
+import io.github.luversof.boot.autoconfigure.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.annotation.DevCheckController;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 import io.github.luversof.boot.devcheck.annotation.ReactiveDevCheckUtil;
@@ -38,7 +38,7 @@ public abstract class AbstractWebFluxDevCheckViewController {
 	}
 
 	protected List<WebFluxDevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
-		var devCheckCoreProperties = exchange.getApplicationContext().getBean(DevCheckCoreProperties.class);
+		var devCheckCoreProperties = exchange.getApplicationContext().getBean(DevCheckProperties.class);
 		
 		Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = exchange.getApplicationContext().getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class).getHandlerMethods().entrySet().stream()
 				.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)
