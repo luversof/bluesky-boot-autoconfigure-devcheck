@@ -3,7 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.luversof</groupId>
-	<artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
+	<artifactId>bluesky-boot-devcheck-build</artifactId>
+	<packaging>pom</packaging>
 	<version>3.1.0-SNAPSHOT</version>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -15,89 +16,19 @@
 	<url>https://github.com/luversof/bluesky-boot-autoconfigure-devcheck</url>
 
 	<properties>
-		<java.version>17</java.version>
+		<main.basedir>${basedir}/../..</main.basedir>
+	
 		<maven-plugin-plugin.version>3.9.0</maven-plugin-plugin.version>
 		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
 		<maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
 		<maven-release-plugin.version>3.0.1</maven-release-plugin.version>
 	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.reflections</groupId>
-			<artifactId>reflections</artifactId>
-			<version>0.10.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-autoconfigure</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
-
-		<!-- (s) test -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.projectreactor</groupId>
-			<artifactId>reactor-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- (e) test -->
-
-		<!-- (s) servlet web -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-core</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!-- (e) servlet web -->
-
-		<!-- (s) webflux -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webflux</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!-- (e) webflux -->
-
-		<!-- (s) logging logback -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!-- (e) logging logback -->
-
-	</dependencies>
+	<modules>
+		<module>bluesky-boot-devcheck-parent</module>
+		<module>bluesky-boot-devcheck</module>
+		<module>bluesky-boot-devcheck-dependencies</module>
+		<module>bluesky-boot-autoconfigure-devcheck</module>
+	</modules>
 
 	<inceptionYear>2021</inceptionYear>
 	<licenses>
