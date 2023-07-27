@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="devCheckUtil = ${T(io.github.luversof.boot.devcheck.util.DevCheckUtil)}">
 <head>
 <meta charset="UTF-8">
 <title>DevCheck</title>
@@ -52,9 +52,6 @@ body { margin: 0; padding: 0;}
 	}
 	
 	window.onload = function(){
-		// 먼저 뿌려보자.
-		
-		
 		devCheckSearchWithHash();
 	};
 	
@@ -77,11 +74,17 @@ body { margin: 0; padding: 0;}
     <ul>
         <li class="thead">
             <span class="bean-name">Controller</span>
-            <span class="value">HTTP Method</span>
             <span class="url">Link</span>
         </li>
         
-        <li class="devcheck-list">
+        <li class="devcheck-list" th:each="devCheckInfo : ${devCheckInfoList}">
+            <span class="bean-name">
+                [[${devCheckInfo.beanName}]]
+                <span class="devcheck-comment" th:if="${devCheckInfo.description}">[(${devCheckInfo.description})]</span>
+            </span>
+            <span class="url">
+                <a target="_blank" th:each="url : ${devCheckInfo.urlList}" th:href="${url}" th:text="${url}"></a>
+            </span>
         </li>
     </ul>
     

@@ -7,19 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ServerWebExchange;
 
+import io.github.luversof.boot.devcheck.service.reactive.DevCheckInfoWebFluxService;
 import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}")
-public class ThymeleafWebFluxDevCheckViewController extends AbstractWebFluxDevCheckViewController {
+public class ThymeleafDevCheckViewWebFluxController extends AbstractDevCheckViewWebFluxController {
 
-	public ThymeleafWebFluxDevCheckViewController(Reflections reflections) {
-		super(reflections);
+	public ThymeleafDevCheckViewWebFluxController(DevCheckInfoWebFluxService devCheckInfoWebFluxService, Reflections reflections) {
+		super(devCheckInfoWebFluxService, reflections);
 	}
 
 	@GetMapping({ "", "/index" })
 	public Mono<String> index(ServerWebExchange exchange, Model model) {
-		model.addAttribute("devCheckInfoList", getDevCheckInfoList(exchange));
+		model.addAttribute("devCheckInfoList", devCheckInfoWebFluxService.getDevCheckInfoList(exchange));
 		model.addAttribute("pathPrefix", getPathPrefix(exchange));
 		return Mono.just("_check/index");
 	}

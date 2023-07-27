@@ -17,8 +17,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.github.luversof.boot.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
-import io.github.luversof.boot.devcheck.controller.servlet.JsonMvcDevCheckViewController;
-import io.github.luversof.boot.devcheck.controller.servlet.ThymeleafMvcDevCheckViewController;
+import io.github.luversof.boot.devcheck.controller.servlet.JsonDevCheckViewMvcController;
+import io.github.luversof.boot.devcheck.controller.servlet.ThymeleafDevCheckViewMvcController;
+import io.github.luversof.boot.devcheck.service.servlet.DevCheckInfoMvcService;
 import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 import jakarta.servlet.Servlet;
 
@@ -27,19 +28,24 @@ import jakarta.servlet.Servlet;
 @ConditionalOnWebApplication(type = Type.SERVLET)
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class DevCheckMvcAutoConfiguration implements WebMvcConfigurer {
-
-    @Bean
-    @ConditionalOnClass(name = "org.thymeleaf.spring5.view.ThymeleafViewResolver")
-    ThymeleafMvcDevCheckViewController blueskyBootThymeleafDevCheckViewController(ApplicationContext applicationContext, DevCheckProperties devCheckCoreProperties) {
-		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		return new ThymeleafMvcDevCheckViewController(applicationContext, reflections);
+	
+	@Bean
+	DevCheckInfoMvcService devCheckInfoMvcService() {
+		return new DevCheckInfoMvcService();
 	}
 
     @Bean
-    @ConditionalOnMissingBean(name = "blueskyBootThymeleafDevCheckViewController")
-    JsonMvcDevCheckViewController blueskyBootJsonDevCheckViewController(ApplicationContext applicationContext, DevCheckProperties devCheckCoreProperties) {
+    @ConditionalOnClass(name = "org.thymeleaf.spring6.view.ThymeleafViewResolver")
+    ThymeleafDevCheckViewMvcController blueskyBootThymeleafDevCheckViewMvcController(DevCheckInfoMvcService devCheckInfoMvcService, DevCheckProperties devCheckCoreProperties) {
 		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
-		return new JsonMvcDevCheckViewController(applicationContext, reflections);
+		return new ThymeleafDevCheckViewMvcController(devCheckInfoMvcService, reflections);
+	}
+
+    @Bean
+    @ConditionalOnMissingBean(name = "blueskyBootThymeleafDevCheckViewMvcController")
+    JsonDevCheckViewMvcController blueskyBootJsonDevCheckViewMvcController(DevCheckInfoMvcService devCheckInfoMvcService, DevCheckProperties devCheckCoreProperties) {
+		Reflections reflections = DevCheckUtil.getReflections(devCheckCoreProperties);
+		return new JsonDevCheckViewMvcController(devCheckInfoMvcService, reflections);
 	}
 
     @Bean
@@ -52,7 +58,7 @@ public class DevCheckMvcAutoConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController(pathPrefix + "/devCheck").setViewName("/devCheck.html");
+		registry.addViewController(pathPrefix + "/devCheck").setViewName("/_check/devCheck.html");
 	}
     
 

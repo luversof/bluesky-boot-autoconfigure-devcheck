@@ -9,24 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 
+import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
 import io.github.luversof.boot.devcheck.domain.DevCheckUtilInfo;
-import io.github.luversof.boot.devcheck.domain.reactive.WebFluxDevCheckInfo;
+import io.github.luversof.boot.devcheck.service.reactive.DevCheckInfoWebFluxService;
 
 @RestController
 @RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}", produces = MediaType.APPLICATION_JSON_VALUE)
-public class JsonWebFluxDevCheckViewController extends AbstractWebFluxDevCheckViewController {
+public class JsonDevCheckViewWebFluxController extends AbstractDevCheckViewWebFluxController {
 
-	public JsonWebFluxDevCheckViewController(Reflections reflections) {
-		super(reflections);
+	public JsonDevCheckViewWebFluxController(DevCheckInfoWebFluxService devCheckInfoWebFluxService, Reflections reflections) {
+		super(devCheckInfoWebFluxService, reflections);
 	}
 
 	@GetMapping({ "", "/index" })
-	public List<WebFluxDevCheckInfo> index(ServerWebExchange exchange) {
-		var devCheckInfoList = getDevCheckInfoList(exchange);
+	public List<DevCheckInfo> index(ServerWebExchange exchange) {
+		var devCheckInfoList = devCheckInfoWebFluxService.getDevCheckInfoList(exchange);
 		var uri = exchange.getRequest().getURI();
 		devCheckInfoList.forEach(devCheckInfo -> {
-			for (int i = 0; i < devCheckInfo.getUrlList().size(); i++) {
-				devCheckInfo.getUrlList().set(i, uri.getScheme() + "://" + uri.getHost() + ":" + uri.getPort() + devCheckInfo.getUrlList().get(i));
+			for (int i = 0; i < devCheckInfo.urlList().size(); i++) {
+				devCheckInfo.urlList().set(i, uri.getScheme() + "://" + uri.getHost() + ":" + uri.getPort() + devCheckInfo.urlList().get(i));
 			}
 		});
 		return devCheckInfoList;
