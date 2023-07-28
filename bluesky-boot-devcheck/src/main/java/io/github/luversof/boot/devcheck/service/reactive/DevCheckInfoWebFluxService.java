@@ -21,7 +21,19 @@ import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
 import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 
 public class DevCheckInfoWebFluxService {
-
+	
+	public List<DevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
+		var handlerMethodMap = getTargetHandlerMethodMap(exchange);
+		
+		List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
+		
+		handlerMethodMap.entrySet().stream()
+			.filter(map -> (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
+			.forEach(map -> devCheckInfoList.add(createDevCheckInfo(map)));
+	
+		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::beanName).thenComparing(devCheckInfo -> devCheckInfo.urlList().get(0))).toList();
+	}
+	
 	private Map<RequestMappingInfo, HandlerMethod> getTargetHandlerMethodMap(ServerWebExchange exchange) {
 		Map<RequestMappingInfo, HandlerMethod> handlerMethods = exchange.getApplicationContext().getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class).getHandlerMethods();
 		
@@ -34,17 +46,15 @@ public class DevCheckInfoWebFluxService {
 		.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 	
-	private DevCheckInfo createDevCheckInfo(ServerWebExchange exchange, Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
+	private DevCheckInfo createDevCheckInfo(Entry<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
 		var requestMappingInfo = handlerMethodMap.getKey();
 		var handlerMethod = handlerMethodMap.getValue();
 		
 		String beanName = handlerMethod.getBean().toString();
 		List<String> urlList = new ArrayList<>();
 		var patternsCondition = requestMappingInfo.getPatternsCondition();
-		var contextPath = exchange.getRequest().getPath().contextPath().value();
-		var pathPrefix = exchange.getRequest().getURI().toString().replace(exchange.getRequest().getPath().contextPath().value(), "").replace("/index", "").replace("/util", "");
 		for (PathPattern pathPattern : patternsCondition.getPatterns()) {
-			urlList.add(DevCheckUtil.getUrlWithParameter(contextPath, pathPrefix, pathPattern.getPatternString(), handlerMethod.getMethod()));
+			urlList.add(DevCheckUtil.getUrlWithParameter(pathPattern.getPatternString(), handlerMethod.getMethod()));
 		}
 		String description = null;
 		var methodAnnotation = handlerMethod.getMethodAnnotation(DevCheckDescription.class);
@@ -54,16 +64,5 @@ public class DevCheckInfoWebFluxService {
 		
 		return new DevCheckInfo(beanName, urlList, description);
 	}
-	
-	public List<DevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
-		var handlerMethodMap = getTargetHandlerMethodMap(exchange);
-		
-		List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
-		
-		handlerMethodMap.entrySet().stream()
-			.filter(map -> (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
-			.forEach(map -> devCheckInfoList.add(createDevCheckInfo(exchange, map)));
-	
-		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::beanName).thenComparing(devCheckInfo -> devCheckInfo.urlList().get(0))).toList();
-	}
+
 }

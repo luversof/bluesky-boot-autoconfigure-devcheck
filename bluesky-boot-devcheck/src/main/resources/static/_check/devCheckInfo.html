@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org" th:with="devCheckUtil = ${T(io.github.luversof.boot.devcheck.util.DevCheckUtil)}">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>DevCheck</title>
@@ -12,9 +13,7 @@ body { margin: 0; padding: 0;}
 .devcheck-container ul { width: 100%; margin: 0; padding: 0; list-style-type: none; display: table; font-size: 14px;}
 .devcheck-container li { margin: 0; padding: 10px; list-style-type: none; width: 100%; box-sizing: border-box; border-bottom: 1px solid #eaecef;}
 .devcheck-container .bean-name { display: table-cell; width: 300px;}
-.devcheck-container .value { display: table-cell; width: 120px; text-align: center;}
 .devcheck-container .url { display: table-cell ; padding: 0 0 0 20px;}
-.devcheck-container .link_blank { margin-left: 5px; vertical-align: middle; }
 .devcheck-container .thead { font-weight: bold; font-size: 18px; border-top: 5px solid #f4f5f7}
 .devcheck-container .devcheck-comment { display:block; font-size: 12px; color: #5fb8e3; letter-spacing: -.5px; }
 .devcheck-container div { padding: 15px;}
@@ -29,9 +28,60 @@ body { margin: 0; padding: 0;}
 }
 </style>
 <script>
+	function createDevCheckInfoElement(devCheckInfo) {
+		var list = document.getElementsByClassName("devcheck-info");
+		
+		var beanName = devCheckInfo.beanName;
+		var description = devCheckInfo.description;
+		var urlList = devCheckInfo.urlList;
+		
+		var devCheckInfoElement = document.createElement("li");
+		devCheckInfoElement.className = "devcheck-info";
+		{
+			var beanNameSpan = document.createElement("span");
+			beanNameSpan.className = "bean-name";
+			
+			{
+				beanNameSpan.append(document.createTextNode(beanName));
+				if (description !== undefined) {
+					var descriptionSpan = document.createElement("span");
+					descriptionSpan.className = "devcheck-comment";
+					descriptionSpan.append(document.createTextNode(description));
+					beanNameSpan.append(descriptionSpan);
+				}
+			}
+			
+			devCheckInfoElement.appendChild(beanNameSpan)
+		}
+		
+		{
+			var urlSpan = document.createElement("span");
+			urlSpan.className = "url"
+			urlList.forEach(url => {
+				var a = document.createElement("a");
+				a.target = "_blank";
+				a.href = url
+				a.append(document.createTextNode(url));
+				urlSpan.append(a);
+			});
+			
+			devCheckInfoElement.appendChild(urlSpan);
+		}
+		
+		return devCheckInfoElement;
+		
+	}
+	
+	function displayDevCheckInfoList(devCheckInfoList){
+		devCheckInfoList.forEach(devCheckInfo => {
+			var devCheckInfoElement = createDevCheckInfoElement(devCheckInfo);
+			document.getElementById("devCheckInfoList").appendChild(devCheckInfoElement);
+		});
+	}
+	
 	function devCheckSearch() {
 		var searchValue = document.getElementById("devCheckSearchInput").value.toUpperCase();
-		var list = document.getElementsByClassName("devcheck-list");
+		var list = document.getElementsByClassName("devcheck-info");
 
 		for (i = 0; i < list.length; i++) {
 			var a = list[i].getElementsByClassName("url")[0].getElementsByTagName("a")[0];
@@ -51,7 +101,22 @@ body { margin: 0; padding: 0;}
 		}
 	}
 	
-	window.onload = function(){
+	window.onload = async function(){
+		var response = await fetch("devCheckInfoList", {
+			"method": "GET",
+			"headers": {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			}
+		});
+		
+		if (response.status !== 200) {
+			alert("devCheckInfo 목록 호출에 에러가 발생하였습니다.");
+			return;
+		}
+		
+		var devCheckInfoList = await response.json();
+		displayDevCheckInfoList(devCheckInfoList);
 		devCheckSearchWithHash();
 	};
 	
@@ -65,26 +130,16 @@ body { margin: 0; padding: 0;}
     <h2>DevCheckController List</h2>
     
     <div>
-    	<a th:href="@{${pathPrefix} + '/util'}">Go to Util static method List</a>
+    	<a href="util">Go to Util static method List</a>
     </div>
     
     
     <input type="text" id="devCheckSearchInput" autofocus class="devcheck-search" onkeyup="devCheckSearch()" placeholder="Enter what you want to search for." />
     
-    <ul>
+    <ul id="devCheckInfoList">
         <li class="thead">
             <span class="bean-name">Controller</span>
             <span class="url">Link</span>
-        </li>
-        
-        <li class="devcheck-list" th:each="devCheckInfo : ${devCheckInfoList}">
-            <span class="bean-name">
-                [[${devCheckInfo.beanName}]]
-                <span class="devcheck-comment" th:if="${devCheckInfo.description}">[(${devCheckInfo.description})]</span>
-            </span>
-            <span class="url">
-                <a target="_blank" th:each="url : ${devCheckInfo.urlList}" th:href="${url}" th:text="${url}"></a>
-            </span>
         </li>
     </ul>
     

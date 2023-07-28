@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org" th:with="devCheckUtil = ${T(io.github.luversof.boot.devcheck.util.DevCheckUtil)}">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <style>
@@ -31,13 +32,65 @@ body { margin: 0; padding: 0;}
 }
 </style>
 <script>
+	function createDevCheckUtilInfoElement(devCheckUtilInfo) {
+		
+		var devCheckInfoElement = document.createElement("li");
+		devCheckInfoElement.className = "tr devcheck-list";
+		{
+			var methodNameDiv = document.createElement("div");
+			methodNameDiv.className = "method-name";
+			methodNameDiv.append(document.createTextNode(devCheckUtilInfo.methodName));
+			devCheckInfoElement.appendChild(methodNameDiv)
+		}
+		
+		{
+			var methodDescriptionDiv = document.createElement("div");
+			methodDescriptionDiv.className = "method-description";
+			
+			var ul = document.createElement("ul");
+			{
+				devCheckUtilInfo.methodInfoList.forEach(methodInfo => {
+					
+					var li = document.createElement("li");
+					li.className = "value";
+					
+					var methodCommentSpan = document.createElement("span");
+					methodCommentSpan.className = "method-comment";
+					methodCommentSpan.append(document.createTextNode(methodInfo.description == null ? "" : methodInfo.description));
+					li.appendChild(methodCommentSpan);
+					
+					
+					var methodInfoSpan = document.createElement("span");
+					methodInfoSpan.className = "method-info";
+					methodInfoSpan.append(document.createTextNode(methodInfo.returnType + " " + methodInfo.method + "(" + methodInfo.parameterNames.join(", ") +")"));
+					li.appendChild(methodInfoSpan);
+					
+					ul.appendChild(li);
+				});
+			}
+			
+			methodDescriptionDiv.appendChild(ul);
+			
+			devCheckInfoElement.appendChild(methodDescriptionDiv);
+		}
+		
+		return devCheckInfoElement;
+		
+	}
+	
+	function displayDevCheckUtilInfoList(devCheckUtilInfoList){
+		devCheckUtilInfoList.forEach(devCheckUtilInfo => {
+			var devCheckUtilInfoElement = createDevCheckUtilInfoElement(devCheckUtilInfo);
+			document.getElementById("devCheckUtilInfoList").appendChild(devCheckUtilInfoElement);
+		});
+	}
+	
 	function devCheckSearch() {
 		var searchValue = document.getElementById("devCheckSearchInput").value.toUpperCase();
 		var list = document.getElementsByClassName("devcheck-list");
 
 		for (i = 0; i < list.length; i++) {
 			var methodName = list[i].getElementsByClassName("method-name")[0].innerText;
-			console.log("A : " + methodName);
 			if (methodName.toUpperCase().indexOf(searchValue) > -1) {
 				list[i].style.display = "";
 			} else {
@@ -53,7 +106,22 @@ body { margin: 0; padding: 0;}
 		}
 	}
 	
-	window.onload = function(){
+	window.onload = async function(){
+		var response = await fetch("devCheckUtilInfoList", {
+			"method": "GET",
+			"headers": {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			}
+		});
+		
+		if (response.status !== 200) {
+			alert("devCheckUtil 목록 호출에 에러가 발생하였습니다.");
+			return;
+		}
+		
+		var devCheckUtilInfoList = await response.json();
+		displayDevCheckUtilInfoList(devCheckUtilInfoList);
 		devCheckSearchWithHash();
 	};
 	
@@ -67,29 +135,15 @@ body { margin: 0; padding: 0;}
     <h2>Util static method List</h2>
     
     <div>
-    	<a th:href="@{${pathPrefix}}">Go to DevCheck List</a>
+    	<a href="index">Go to DevCheck List</a>
     </div>
     
     <input type="text" id="devCheckSearchInput" autofocus class="devcheck-search" onkeyup="devCheckSearch()" placeholder="Enter what you want to search for." />
     
-    <ul>
+    <ul id="devCheckUtilInfoList">
         <li class="thead">
             <span class="method-name">Util name</span>
             <span class="method-description">method</span>
-        </li>
-        
-        <li class="tr devcheck-list" th:each="devCheckUtilInfo : ${devCheckUtilInfoList}" th:id="${devCheckUtilInfo.methodName}">
-            <div class="method-name" th:text="${devCheckUtilInfo.methodName}"></div>
-            <div class="method-description">
-                <ul>
-                    <li class="value" th:each="methodInfo : ${devCheckUtilInfo.methodInfoList}">
-                        <span class="method-comment" th:utext="|// ${methodInfo.description}|"></span>
-                        <span class="method-info">
-                           [[${methodInfo.returnType}]] [[${methodInfo.method}]](<th:block th:each="parameterName, iterStat  : ${methodInfo.parameterNames}" th:text="${parameterName} + ${iterStat.last ? '' : ', '}"></th:block>)
-                        </span>
-                    </li>
-                </ul>
-            </div>
         </li>
     </ul>
 </div>
