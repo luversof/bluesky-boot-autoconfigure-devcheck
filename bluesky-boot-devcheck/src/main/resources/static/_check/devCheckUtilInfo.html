@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<title>DevCheckUtil</title>
 <style>
 * { box-sizing: border-box; color: #494949; }
 body { margin: 0; padding: 0;}
@@ -62,7 +63,7 @@ body { margin: 0; padding: 0;}
 					
 					var methodInfoSpan = document.createElement("span");
 					methodInfoSpan.className = "method-info";
-					methodInfoSpan.append(document.createTextNode(methodInfo.returnType + " " + methodInfo.method + "(" + methodInfo.parameterNames.join(", ") +")"));
+					methodInfoSpan.append(document.createTextNode(methodInfo.returnType + " " + methodInfo.method + "(" + methodInfo.parameterList.join() + ")"));
 					li.appendChild(methodInfoSpan);
 					
 					ul.appendChild(li);

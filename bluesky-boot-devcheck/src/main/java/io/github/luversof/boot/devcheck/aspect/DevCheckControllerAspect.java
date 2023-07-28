@@ -10,15 +10,15 @@ import io.github.luversof.boot.devcheck.exception.DevCheckException;
 @Aspect
 public class DevCheckControllerAspect {
 	
-	private DevCheckProperties devCheckCoreProperties;
+	private DevCheckProperties devCheckProperties;
 	
 	public DevCheckControllerAspect(DevCheckProperties devCheckProperties) {
-		this.devCheckCoreProperties = devCheckProperties;
+		this.devCheckProperties = devCheckProperties;
 	}
 	
 	@Around("@within(io.github.luversof.boot.devcheck.annotation.DevCheckController)")
 	public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-		if (!devCheckCoreProperties.isEnabled()) {
+		if (!devCheckProperties.isEnabled()) {
 			throw new DevCheckException();
 		}
 		return proceedingJoinPoint.proceed();

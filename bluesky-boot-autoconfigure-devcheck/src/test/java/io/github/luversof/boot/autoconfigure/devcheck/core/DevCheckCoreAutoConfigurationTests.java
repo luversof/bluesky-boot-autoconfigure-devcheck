@@ -17,7 +17,7 @@ class DevCheckCoreAutoConfigurationTests {
 			;
 	
 	@Test
-	void hasDevCheckCoreProperties() {
+	void hasDevCheckProperties() {
 		this.contextRunner.run(context -> {
 			assertThat(context).hasSingleBean(DevCheckProperties.class);
 		});

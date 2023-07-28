@@ -4,14 +4,16 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.reflections.Reflections;
-import org.springframework.core.DefaultParameterNameDiscoverer;
-import org.springframework.core.ParameterNameDiscoverer;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 
+import io.github.luversof.boot.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 import io.github.luversof.boot.devcheck.annotation.DevCheckUtil;
 import io.github.luversof.boot.devcheck.domain.DevCheckUtilInfo;
@@ -20,11 +22,9 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class DevCheckUtilInfoService {
+	
+	private DevCheckProperties devCheckProperties;
 
-	private final Reflections reflections;
-	
-	private final ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
-	
 	public List<DevCheckUtilInfo> getDevCheckUtilInfo() {
 		
 		Set<Class<?>> targetClassSet = getTargetClassSet();
@@ -41,7 +41,24 @@ public class DevCheckUtilInfoService {
 	}
 	
 	private Set<Class<?>> getTargetClassSet() {
-		return reflections.getTypesAnnotatedWith(DevCheckUtil.class);
+		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
+		provider.addIncludeFilter(new AnnotationTypeFilter(DevCheckUtil.class));
+		
+		var beanDefinitionSet = new HashSet<BeanDefinition>();  
+		for (var basePackage : devCheckProperties.getBasePackages()) {
+			beanDefinitionSet.addAll(provider.findCandidateComponents(basePackage));
+		}
+		
+		Set<Class<?>> targetClassSet = new HashSet<>();
+		beanDefinitionSet.forEach(beanDefinition -> {
+				try {
+					targetClassSet.add(Class.forName(beanDefinition.getBeanClassName()));
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+		});
+		
+		return targetClassSet;
 	}
 	
 	private DevCheckUtilInfo createDevCheckUtilInfo(Class<?> targetClass) {
@@ -67,10 +84,20 @@ public class DevCheckUtilInfoService {
 				description = mergedAnnotation.value();
 			}
 		}
+		
+		// parameters string format
+		var targetParameters = method.getParameters();
+		var parameterList = new ArrayList<String>();
+		if (targetParameters != null && targetParameters.length > 0) {
+			for (var targetParameter : targetParameters) {
+				parameterList.add(targetParameter.getType().getSimpleName() + " " + targetParameter.getName());
+			}
+		}
+		
 		return new DevCheckUtilMethodInfo(
 			method.getName(),
 			method.getReturnType().getSimpleName(),
-			parameterNameDiscoverer.getParameterNames(method),
+			parameterList,
 			description
 		);
 	}

@@ -1,6 +1,5 @@
 package io.github.luversof.boot.autoconfigure.devcheck;
 
-import org.reflections.Reflections;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.PropertySource;
 
 import io.github.luversof.boot.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.aspect.DevCheckControllerAspect;
-import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 import io.github.luversof.boot.devcheck.service.DevCheckUtilInfoService;
 
 @AutoConfiguration
@@ -25,8 +23,7 @@ public class DevCheckAutoConfiguration {
 	
 	@Bean
 	DevCheckUtilInfoService devCheckUtilInfoService(DevCheckProperties devCheckProperties) {
-		Reflections reflections = DevCheckUtil.getReflections(devCheckProperties);
-		return new DevCheckUtilInfoService(reflections);
+		return new DevCheckUtilInfoService(devCheckProperties);
 	}
 
 }

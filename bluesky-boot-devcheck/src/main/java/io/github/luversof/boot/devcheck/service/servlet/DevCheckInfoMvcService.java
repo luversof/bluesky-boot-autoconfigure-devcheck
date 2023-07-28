@@ -1,5 +1,6 @@
 package io.github.luversof.boot.devcheck.service.servlet;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -11,8 +12,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.DefaultParameterNameDiscoverer;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -22,11 +26,12 @@ import io.github.luversof.boot.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.annotation.DevCheckController;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
-import io.github.luversof.boot.devcheck.util.DevCheckUtil;
 
 public class DevCheckInfoMvcService implements ApplicationContextAware {
 	
 	private ApplicationContext applicationContext;
+	
+	private final ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
 	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -64,17 +69,17 @@ public class DevCheckInfoMvcService implements ApplicationContextAware {
 	 * @return
 	 */
 	private Map<RequestMappingInfo, HandlerMethod> getTargetHandlerMethodMap() {
-		var devCheckCoreProperties = applicationContext.getBean(DevCheckProperties.class);
+		var devCheckProperties = applicationContext.getBean(DevCheckProperties.class);
 		return getHandlerMethodMap().entrySet().stream()
 		.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)
 			&& (
 				(
 					handlerMapping.getKey().getPatternsCondition() != null
-					&& handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.startsWith(devCheckCoreProperties.getPathPrefix()))
+					&& handlerMapping.getKey().getPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.startsWith(devCheckProperties.getPathPrefix()))
 				)
 				|| (
 					handlerMapping.getKey().getPathPatternsCondition() != null
-					&& handlerMapping.getKey().getPathPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.getPatternString().startsWith(devCheckCoreProperties.getPathPrefix()))
+					&& handlerMapping.getKey().getPathPatternsCondition().getPatterns().stream().anyMatch(pattern -> pattern.getPatternString().startsWith(devCheckProperties.getPathPrefix()))
 				)
 			)
 			&& handlerMapping.getKey().getProducesCondition().getExpressions().stream().anyMatch(mediaTypeExpression -> mediaTypeExpression.getMediaType().equals(MediaType.APPLICATION_JSON)))
@@ -98,13 +103,13 @@ public class DevCheckInfoMvcService implements ApplicationContextAware {
 		
 		if (patternsCondition != null) {
 			for (String url : patternsCondition.getPatterns()) {
-				urlList.add(DevCheckUtil.getUrlWithParameter(url, handlerMethodMap.getValue().getMethod()));
+				urlList.add(getUrlWithParameter(url, handlerMethodMap.getValue().getMethod()));
 			}
 		}
 		
 		if (pathPatternsCondition != null) {
 			for (PathPattern pattern : pathPatternsCondition.getPatterns()) {
-				urlList.add(DevCheckUtil.getUrlWithParameter(pattern.getPatternString(), handlerMethodMap.getValue().getMethod()));
+				urlList.add(getUrlWithParameter(pattern.getPatternString(), handlerMethodMap.getValue().getMethod()));
 			}
 		}
 	
@@ -113,5 +118,22 @@ public class DevCheckInfoMvcService implements ApplicationContextAware {
 			description = methodAnnotation.value();
 		}
 		return new DevCheckInfo(beanName, urlList, description);
+	}
+	
+	public String getUrlWithParameter(String pattern, Method method) {
+		var stringBuilder = new StringBuilder();
+		stringBuilder.append(pattern);
+		
+		var parameterNames = parameterNameDiscoverer.getParameterNames(method);
+		if (parameterNames != null && parameterNames.length > 0) {
+			for (int i = 0; i < parameterNames.length; i++) {
+				if (method.getParameters()[i].isAnnotationPresent(PathVariable.class)) {
+					continue;
+				}
+				stringBuilder.append(i == 0 ? "?" : "&").append(parameterNames[i]).append("={").append(parameterNames[i]).append("}");
+			}
+		}
+		
+		return stringBuilder.toString().replace("//", "/");
 	}
 }
