@@ -42,12 +42,12 @@ public class DevCheckMvcAutoConfiguration implements WebMvcConfigurer {
     
     @Value("${bluesky-boot.dev-check.path-prefix}")
     private String pathPrefix;
-
+    
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addRedirectViewController(pathPrefix, pathPrefix + "/index");
-		registry.addViewController(pathPrefix + "/index").setViewName("/_check/devCheckInfo.html");
-		registry.addViewController(pathPrefix + "/util").setViewName("/_check/devCheckUtilInfo.html");
+		registry.addViewController(pathPrefix + "/index").setViewName("forward:/_check/devCheckInfo.html");
+		registry.addViewController(pathPrefix + "/util").setViewName("forward:/_check/devCheckUtilInfo.html");
 	}
     
 }
