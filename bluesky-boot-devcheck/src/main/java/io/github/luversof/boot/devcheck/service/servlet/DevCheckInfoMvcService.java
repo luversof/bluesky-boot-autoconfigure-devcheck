@@ -29,6 +29,8 @@ import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
 
 public class DevCheckInfoMvcService implements ApplicationContextAware {
 	
+	List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
+	
 	private ApplicationContext applicationContext;
 	
 	private final ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
@@ -39,15 +41,16 @@ public class DevCheckInfoMvcService implements ApplicationContextAware {
 	}
 	
 	public List<DevCheckInfo> getDevCheckInfoList() {
+		if (!devCheckInfoList.isEmpty()) {
+			return devCheckInfoList;
+		}
+		
 		var handlerMethodMap = getTargetHandlerMethodMap();
-		
-		List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
-		
 		handlerMethodMap.entrySet().stream()
 			.filter(map -> (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
 			.forEach(map -> devCheckInfoList.add(createDevCheckInfo(map)));
-		
-		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::beanName).thenComparing(devCheckInfo -> devCheckInfo.urlList().get(0))).toList();
+		devCheckInfoList = devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::beanName).thenComparing(devCheckInfo -> devCheckInfo.urlList().get(0))).toList();
+		return devCheckInfoList;
 	}
 
 	/**

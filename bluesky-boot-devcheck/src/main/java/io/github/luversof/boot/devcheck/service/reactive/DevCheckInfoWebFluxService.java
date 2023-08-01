@@ -25,18 +25,21 @@ import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
 
 public class DevCheckInfoWebFluxService {
 	
+	List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
+	
 	private final ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
 	
 	public List<DevCheckInfo> getDevCheckInfoList(ServerWebExchange exchange) {
+		if (!devCheckInfoList.isEmpty()) {
+			return devCheckInfoList;
+		}
+		
 		var handlerMethodMap = getTargetHandlerMethodMap(exchange);
-		
-		List<DevCheckInfo> devCheckInfoList = new ArrayList<>();
-		
 		handlerMethodMap.entrySet().stream()
 			.filter(map -> (!map.getValue().hasMethodAnnotation(DevCheckDescription.class) || (map.getValue().hasMethodAnnotation(DevCheckDescription.class) && map.getValue().getMethodAnnotation(DevCheckDescription.class).displayable())))
 			.forEach(map -> devCheckInfoList.add(createDevCheckInfo(map)));
-	
-		return devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::beanName).thenComparing(devCheckInfo -> devCheckInfo.urlList().get(0))).toList();
+		devCheckInfoList = devCheckInfoList.stream().sorted(Comparator.comparing(DevCheckInfo::beanName).thenComparing(devCheckInfo -> devCheckInfo.urlList().get(0))).toList();
+		return devCheckInfoList;
 	}
 	
 	private Map<RequestMappingInfo, HandlerMethod> getTargetHandlerMethodMap(ServerWebExchange exchange) {
