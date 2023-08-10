@@ -3,6 +3,7 @@ package io.github.luversof.boot.devcheck.service.servlet;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.util.pattern.PathPattern;
 
 import io.github.luversof.boot.devcheck.DevCheckProperties;
-import io.github.luversof.boot.devcheck.annotation.DevCheckController;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
 
@@ -73,8 +73,12 @@ public class DevCheckInfoMvcService implements ApplicationContextAware {
 	 */
 	private Map<RequestMappingInfo, HandlerMethod> getTargetHandlerMethodMap() {
 		var devCheckProperties = applicationContext.getBean(DevCheckProperties.class);
+		if (devCheckProperties.getDevCheckControllerAnnotationList() == null) {
+			return Collections.emptyMap();
+		}
 		return getHandlerMethodMap().entrySet().stream()
-		.filter(handlerMapping -> handlerMapping.getValue().getBeanType().isAnnotationPresent(DevCheckController.class)
+		.filter(handlerMapping -> 
+			devCheckProperties.getDevCheckControllerAnnotationList().stream().anyMatch(annotation -> handlerMapping.getValue().getBeanType().isAnnotationPresent(annotation))
 			&& (
 				(
 					handlerMapping.getKey().getPatternsCondition() != null
