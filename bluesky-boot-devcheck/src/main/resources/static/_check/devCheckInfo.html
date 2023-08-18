@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -43,12 +43,10 @@ body { margin: 0; padding: 0;}
 			
 			{
 				beanNameSpan.append(document.createTextNode(beanName));
-				if (description !== undefined) {
-					var descriptionSpan = document.createElement("span");
-					descriptionSpan.className = "devcheck-comment";
-					descriptionSpan.append(document.createTextNode(description));
-					beanNameSpan.append(descriptionSpan);
-				}
+				var descriptionSpan = document.createElement("span");
+				descriptionSpan.className = "devcheck-comment";
+				descriptionSpan.append(document.createTextNode(description === null ? "" : description));
+				beanNameSpan.append(descriptionSpan);
 			}
 			
 			devCheckInfoElement.appendChild(beanNameSpan)

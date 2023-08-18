@@ -57,9 +57,8 @@ body { margin: 0; padding: 0;}
 					
 					var methodCommentSpan = document.createElement("span");
 					methodCommentSpan.className = "method-comment";
-					methodCommentSpan.append(document.createTextNode(methodInfo.description == null ? "" : methodInfo.description));
+					methodCommentSpan.append(document.createTextNode(methodInfo.description === null ? "" : methodInfo.description));
 					li.appendChild(methodCommentSpan);
-					
 					
 					var methodInfoSpan = document.createElement("span");
 					methodInfoSpan.className = "method-info";
@@ -69,14 +68,10 @@ body { margin: 0; padding: 0;}
 					ul.appendChild(li);
 				});
 			}
-			
 			methodDescriptionDiv.appendChild(ul);
-			
 			devCheckInfoElement.appendChild(methodDescriptionDiv);
 		}
-		
 		return devCheckInfoElement;
-		
 	}
 	
 	function displayDevCheckUtilInfoList(devCheckUtilInfoList){
