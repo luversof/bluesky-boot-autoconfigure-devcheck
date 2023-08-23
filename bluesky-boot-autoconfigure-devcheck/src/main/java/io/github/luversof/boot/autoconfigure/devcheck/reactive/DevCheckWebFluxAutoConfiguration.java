@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
+import io.github.luversof.boot.devcheck.controller.DevCheckViewController;
 import io.github.luversof.boot.devcheck.controller.reactive.DevCheckApiWebFluxController;
 import io.github.luversof.boot.devcheck.service.DevCheckUtilInfoService;
 import io.github.luversof.boot.devcheck.service.reactive.DevCheckInfoWebFluxService;
@@ -21,13 +22,18 @@ import io.github.luversof.boot.devcheck.service.reactive.DevCheckInfoWebFluxServ
 public class DevCheckWebFluxAutoConfiguration {
 	
 	@Bean
-	DevCheckInfoWebFluxService devCheckInfoWebFluxService() {
+	DevCheckInfoWebFluxService blueskyBootDevCheckInfoWebFluxService() {
 		return new DevCheckInfoWebFluxService();
 	}
 
     @Bean
     DevCheckApiWebFluxController blueskyBootDevCheckApiWebFluxController(DevCheckInfoWebFluxService devCheckInfoWebFluxService, DevCheckUtilInfoService devCheckUtilInfoService) {
 		return new DevCheckApiWebFluxController(devCheckInfoWebFluxService, devCheckUtilInfoService);
+	}
+    
+	@Bean
+	DevCheckViewController blueskyBootDevCheckViewController() {
+		return new DevCheckViewController();
 	}
 
     @Bean

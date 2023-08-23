@@ -14,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.github.luversof.boot.devcheck.controller.DevCheckCoreController;
+import io.github.luversof.boot.devcheck.controller.DevCheckViewController;
 import io.github.luversof.boot.devcheck.controller.servlet.DevCheckApiMvcController;
 import io.github.luversof.boot.devcheck.service.DevCheckUtilInfoService;
 import io.github.luversof.boot.devcheck.service.servlet.DevCheckInfoMvcService;
@@ -26,13 +27,18 @@ import jakarta.servlet.Servlet;
 public class DevCheckMvcAutoConfiguration implements WebMvcConfigurer {
 	
 	@Bean
-	DevCheckInfoMvcService devCheckInfoMvcService() {
+	DevCheckInfoMvcService blueskyBootDevCheckInfoMvcService() {
 		return new DevCheckInfoMvcService();
 	}
 
     @Bean
     DevCheckApiMvcController blueskyBootDevCheckApiMvcController(DevCheckInfoMvcService devCheckInfoMvcService, DevCheckUtilInfoService devCheckUtilInfoService) {
 		return new DevCheckApiMvcController(devCheckInfoMvcService, devCheckUtilInfoService);
+	}
+    
+	@Bean
+	DevCheckViewController blueskyBootDevCheckViewController() {
+		return new DevCheckViewController();
 	}
 
     @Bean
@@ -46,8 +52,6 @@ public class DevCheckMvcAutoConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addRedirectViewController(pathPrefix, pathPrefix + "/index");
-		registry.addViewController(pathPrefix + "/index").setViewName("forward:/_check/devCheckInfo.html");
-		registry.addViewController(pathPrefix + "/util").setViewName("forward:/_check/devCheckUtilInfo.html");
 	}
     
 }
