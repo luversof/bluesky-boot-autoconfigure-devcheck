@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "${brick-modules.dev-check.path-prefix}", produces = MediaType.TEXT_HTML_VALUE)
+@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}", produces = MediaType.TEXT_HTML_VALUE)
 public class DevCheckViewController {
 	
 	@GetMapping("/index")
