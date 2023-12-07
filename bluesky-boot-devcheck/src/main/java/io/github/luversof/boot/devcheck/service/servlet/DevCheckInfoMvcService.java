@@ -18,6 +18,8 @@ import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -129,6 +131,7 @@ public class DevCheckInfoMvcService implements ApplicationContextAware {
 	
 	public String getUrlWithParameter(String pattern, Method method) {
 		var stringBuilder = new StringBuilder();
+		stringBuilder.append(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getContextPath());
 		stringBuilder.append(pattern);
 		
 		var parameterNames = parameterNameDiscoverer.getParameterNames(method);
