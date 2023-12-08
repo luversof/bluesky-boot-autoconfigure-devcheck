@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.2.0</version>
 	</parent>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>It is a library that lists and shows the methods of the controller and the utility static methods used for development confirmation.</description>
@@ -18,7 +18,7 @@
 	<properties>
 		<main.basedir>${basedir}/../..</main.basedir>
 	
-		<maven-plugin-plugin.version>3.9.0</maven-plugin-plugin.version>
+		<maven-plugin-plugin.version>3.10.2</maven-plugin-plugin.version>
 		<nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
 		<maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
 		<maven-release-plugin.version>3.0.1</maven-release-plugin.version>
