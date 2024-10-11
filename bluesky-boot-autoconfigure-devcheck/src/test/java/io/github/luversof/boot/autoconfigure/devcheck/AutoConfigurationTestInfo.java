@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AutoConfigurationTestInfo {
 
-	public static String[] BASE_PROPERTY = new String[] { "net-profile=localdev", "bluesky-boot.dev-check.enabled=true" };
+	public static final String[] BASE_PROPERTY = new String[] { "net-profile=localdev", "bluesky-boot.dev-check.enabled=true" };
 
-	public static Class<?>[] DEVCHECK_SERVLET_CONFIGURATION = new Class<?>[] { WebMvcAutoConfiguration.class, DispatcherServletAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, PropertyPlaceholderAutoConfiguration.class };
+	public static final Class<?>[] DEVCHECK_SERVLET_CONFIGURATION = new Class<?>[] { WebMvcAutoConfiguration.class, DispatcherServletAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class, PropertyPlaceholderAutoConfiguration.class };
 
-	public static Class<?>[] DEVCHECK_CORE_USER_CONFIGURATION = new Class<?>[] { DevCheckAutoConfiguration.class };
+	public static final Class<?>[] DEVCHECK_CORE_USER_CONFIGURATION = new Class<?>[] { DevCheckAutoConfiguration.class };
 
-	public static Class<?>[] DEVCHECK_CORE_SERVLET_USER_CONFIGURATION = addClassAll(DEVCHECK_CORE_USER_CONFIGURATION, DevCheckMvcAutoConfiguration.class);
+	public static final Class<?>[] DEVCHECK_CORE_SERVLET_USER_CONFIGURATION = addClassAll(DEVCHECK_CORE_USER_CONFIGURATION, DevCheckMvcAutoConfiguration.class);
 
 	@SuppressWarnings("unused")
 	private static String[] addAll(String[] target, String... strings) {
