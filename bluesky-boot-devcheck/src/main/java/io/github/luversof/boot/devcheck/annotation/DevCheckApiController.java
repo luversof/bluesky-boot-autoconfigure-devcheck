@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 대상 DevCheckController를 지정합니다.<br>
- * Specifies the target DevCheckController.<br>
- * @author bluesky
- *
+ * DevCheck Api를 제공하기 위한 annotation
+ * 
+ * 내부 사용 목적
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Documented
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-public @interface DevCheckController {
+public @interface DevCheckApiController {
 
 	@AliasFor(annotation = RestController.class)
 	String value() default "";

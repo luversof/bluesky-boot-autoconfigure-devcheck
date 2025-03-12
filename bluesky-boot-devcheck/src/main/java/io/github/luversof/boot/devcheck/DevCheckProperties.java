@@ -1,6 +1,5 @@
 package io.github.luversof.boot.devcheck;
 
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,11 +18,6 @@ public class DevCheckProperties {
 	 */
 	private List<String> basePackageList;
 	
-	private String pathPrefix;
-	
-	
-	private List<Class<? extends Annotation>> devCheckControllerAnnotationList;
-	
-	private List<Class<? extends Annotation>> devCheckUtilAnnotationList;
+	private String[] pathPrefixes;
 	
 }

@@ -9,24 +9,23 @@ import java.lang.annotation.Target;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 대상 DevCheckController를 지정합니다.<br>
- * Specifies the target DevCheckController.<br>
- * @author bluesky
- *
+ * DevCheck ViewPage를 제공하기 위한 annotation
+ * 
+ * 내부 사용 목적
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-@RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-public @interface DevCheckController {
+@Controller
+@RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
+public @interface DevCheckViewController {
 
-	@AliasFor(annotation = RestController.class)
+	@AliasFor(annotation = Controller.class)
 	String value() default "";
 
 }

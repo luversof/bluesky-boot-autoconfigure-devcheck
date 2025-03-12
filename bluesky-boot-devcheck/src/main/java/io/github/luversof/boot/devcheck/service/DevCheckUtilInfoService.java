@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +16,7 @@ import org.springframework.util.ClassUtils;
 
 import io.github.luversof.boot.devcheck.DevCheckProperties;
 import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
+import io.github.luversof.boot.devcheck.annotation.DevCheckUtil;
 import io.github.luversof.boot.devcheck.domain.DevCheckUtilInfo;
 import io.github.luversof.boot.devcheck.domain.DevCheckUtilMethodInfo;
 import lombok.RequiredArgsConstructor;
@@ -47,12 +47,8 @@ public class DevCheckUtilInfoService {
 	
 	private Set<Class<?>> getTargetClassSet() {
 		
-		if (devCheckProperties.getBasePackageList() == null || devCheckProperties.getDevCheckUtilAnnotationList() == null) {
-			return Collections.emptySet();
-		}
-		
 		ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
-		devCheckProperties.getDevCheckUtilAnnotationList().forEach(annotation -> provider.addIncludeFilter(new AnnotationTypeFilter(annotation)));
+		provider.addIncludeFilter(new AnnotationTypeFilter(DevCheckUtil.class));
 		
 		var beanDefinitionSet = new HashSet<BeanDefinition>();
 		devCheckProperties.getBasePackageList().forEach(basePackage -> beanDefinitionSet.addAll(provider.findCandidateComponents(basePackage)));

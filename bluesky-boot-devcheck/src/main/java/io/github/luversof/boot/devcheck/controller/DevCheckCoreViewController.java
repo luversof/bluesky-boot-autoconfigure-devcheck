@@ -1,13 +1,11 @@
 package io.github.luversof.boot.devcheck.controller;
 
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}", produces = MediaType.TEXT_HTML_VALUE)
-public class DevCheckViewController {
+import io.github.luversof.boot.devcheck.annotation.DevCheckViewController;
+
+@DevCheckViewController
+public class DevCheckCoreViewController {
 	
 	@GetMapping("/index")
 	public String index() {

@@ -1,12 +1,12 @@
 package io.github.luversof.boot.autoconfigure.devcheck.logging.logback;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -16,13 +16,13 @@ import io.github.luversof.boot.devcheck.logging.logback.controller.DevCheckLogba
 import io.github.luversof.boot.devcheck.logging.logback.service.LogbackAppender;
 import io.github.luversof.boot.devcheck.logging.logback.service.LogbackAppenderService;
 
-@Configuration(value = "_blueskyBootDevCheckLoggingLogbackAutoConfiguration", proxyBeanMethods = false)
+@Configuration(value = "blueskyBootDevCheckLoggingLogbackAutoConfiguration", proxyBeanMethods = false)
 @ConditionalOnClass(Appender.class)
 @ConditionalOnProperty(prefix = "bluesky-boot.dev-check", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class LogbackAutoConfiguration {
 
-    @Bean
-    LogbackAppenderService<ILoggingEvent> blueskyBootLogbackAppenderService() {
+	@Bean
+	LogbackAppenderService<ILoggingEvent> blueskyBootLogbackAppenderService() {
 		var logbackAppenderService = new LogbackAppenderService<ILoggingEvent>();
 		addLogbackAppender(logbackAppenderService);
 		return logbackAppenderService;
@@ -40,8 +40,8 @@ public class LogbackAutoConfiguration {
 		loggerContext.getLogger(Logger.ROOT_LOGGER_NAME).addAppender(logbackAppender);
 	}
 
-    @Bean
-    DevCheckLogbackController blueskyBootDevCheckLogbackController(LogbackAppenderService<ILoggingEvent> logbackAppenderService) {
+	@Bean
+	DevCheckLogbackController blueskyBootDevCheckLogbackController(LogbackAppenderService<ILoggingEvent> logbackAppenderService) {
 		return new DevCheckLogbackController(logbackAppenderService);
 	}
 }

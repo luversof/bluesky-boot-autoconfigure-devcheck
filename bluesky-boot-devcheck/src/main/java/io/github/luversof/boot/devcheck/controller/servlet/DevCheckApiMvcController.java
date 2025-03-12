@@ -2,11 +2,9 @@ package io.github.luversof.boot.devcheck.controller.servlet;
 
 import java.util.List;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import io.github.luversof.boot.devcheck.annotation.DevCheckApiController;
 import io.github.luversof.boot.devcheck.domain.DevCheckInfo;
 import io.github.luversof.boot.devcheck.domain.DevCheckUtilInfo;
 import io.github.luversof.boot.devcheck.service.DevCheckUtilInfoService;
@@ -15,8 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-@RestController
-@RequestMapping(value = "${bluesky-boot.dev-check.path-prefix}", produces = MediaType.APPLICATION_JSON_VALUE)
+@DevCheckApiController
 public class DevCheckApiMvcController {
 	
 	private final DevCheckInfoMvcService devCheckInfoMvcService;
