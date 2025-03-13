@@ -1,4 +1,4 @@
-package io.github.luversof.boot.devcheck.annotation;
+package io.github.luversof.boot.autoconfigure.devcheck;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,23 +7,19 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.core.annotation.AliasFor;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 대상 DevCheckController를 지정합니다.<br>
- * Specifies the target DevCheckController.<br>
- * @author bluesky
- *
- */
+import io.github.luversof.boot.devcheck.annotation.DevCheckController;
+
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @RestController
-public @interface DevCheckController {
-
-	@AliasFor(annotation = RestController.class)
-	String value() default "";
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@DevCheckController
+public @interface InheritedDevCheckController {
 
 }

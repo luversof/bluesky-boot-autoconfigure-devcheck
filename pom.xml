@@ -14,9 +14,6 @@
 	<description>It is a library that lists and shows the methods of the controller and the utility static methods used for development confirmation.</description>
 	<url>https://github.com/luversof/bluesky-boot-autoconfigure-devcheck</url>
 
-	<properties>
-		<!--<main.basedir>${basedir}/../..</main.basedir>-->
-	</properties>
 	<modules>
 		<module>bluesky-boot-devcheck-parent</module>
 		<module>bluesky-boot-devcheck</module>

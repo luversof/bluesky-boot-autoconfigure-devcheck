@@ -1,4 +1,4 @@
-package io.github.luversof.boot.autoconfigure.devcheck.core;
+package io.github.luversof.boot.autoconfigure.devcheck;
 
 import java.util.regex.Pattern;
 
@@ -28,8 +28,8 @@ class SimpleTests {
 	
 	@Test
 	void annotationTest() {
-		DevCheckCoreController devCheckCoreController = new DevCheckCoreController(null);
-		log.debug("test : {}", devCheckCoreController.getClass().isAnnotationPresent(DevCheckController.class));
+		log.debug("test : {}", DevCheckCoreController.class.isAnnotationPresent(DevCheckController.class));
+		log.debug("test : {}", TestDevCheckController.class.isAnnotationPresent(InheritedDevCheckController.class));
 	}
 
 }

@@ -1,4 +1,4 @@
-package io.github.luversof.boot.autoconfigure.devcheck.core;
+package io.github.luversof.boot.autoconfigure.devcheck;
 
 import static io.github.luversof.boot.autoconfigure.devcheck.AutoConfigurationTestInfo.BASE_PROPERTY;
 import static io.github.luversof.boot.autoconfigure.devcheck.AutoConfigurationTestInfo.DEVCHECK_CORE_SERVLET_USER_CONFIGURATION;

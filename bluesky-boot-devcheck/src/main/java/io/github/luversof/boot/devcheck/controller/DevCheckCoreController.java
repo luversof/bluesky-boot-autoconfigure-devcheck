@@ -14,7 +14,7 @@ import io.github.luversof.boot.devcheck.annotation.DevCheckDescription;
 @DevCheckController
 public class DevCheckCoreController {
 	
-	private final String pathPrefix = "/blueskyDevCheck/core";
+	private static final String PATH_PREFIX = "/blueskyDevCheck/core";
 
 	private final ApplicationContext applicationContext;
 
@@ -23,25 +23,25 @@ public class DevCheckCoreController {
 	}
 
 	@DevCheckDescription("spring activeProfiles")
-	@GetMapping(pathPrefix + "/activeProfiles")
+	@GetMapping(PATH_PREFIX + "/activeProfiles")
 	public String[] activeProfiles() {
 		return applicationContext.getEnvironment().getActiveProfiles();
 	}
 
 	@DevCheckDescription("locale")
-	@GetMapping(pathPrefix + "/locale")
+	@GetMapping(PATH_PREFIX + "/locale")
 	public Locale locale() {
 		return LocaleContextHolder.getLocale();
 	}
 
 	@DevCheckDescription("LocaleDateTime.now()")
-	@GetMapping(pathPrefix + "/localDateTimeNow")
+	@GetMapping(PATH_PREFIX + "/localDateTimeNow")
 	public LocalDateTime localeDateTimeNow() {
 		return LocalDateTime.now();
 	}
 
 	@DevCheckDescription("ZonedDateTime.now()")
-	@GetMapping(pathPrefix + "/zonedDateTimeNow")
+	@GetMapping(PATH_PREFIX + "/zonedDateTimeNow")
 	public ZonedDateTime zonedDateTimeNow() {
 		return ZonedDateTime.now();
 	}

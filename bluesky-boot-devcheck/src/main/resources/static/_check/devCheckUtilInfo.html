@@ -83,12 +83,12 @@ body { margin: 0; padding: 0;}
 		var searchValue = document.getElementById("devCheckSearchInput").value.toUpperCase();
 		var list = document.getElementsByClassName("devcheck-list");
 
-		for (i = 0; i < list.length; i++) {
-			var methodName = list[i].getElementsByClassName("method-name")[0].innerText;
+		for (const element of list) {
+			var methodName = element.getElementsByClassName("method-name")[0].innerText;
 			if (methodName.toUpperCase().indexOf(searchValue) > -1) {
-				list[i].style.display = "";
+				element.style.display = "";
 			} else {
-				list[i].style.display = "none";
+				element.style.display = "none";
 			}
 		}
 	}
