@@ -1,6 +1,7 @@
 package io.github.luversof.boot.autoconfigure.devcheck.reactive;
 
 import java.lang.reflect.Method;
+import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -91,7 +92,7 @@ public class DevCheckWebFluxAutoConfiguration {
 	RouterFunction<ServerResponse> blueskyBootDevCheckViewRouterFunction() {
 		var builder = RouterFunctions.route();
 		for (var pathPrefix : pathPrefixes) {
-			builder.route(RequestPredicates.GET(pathPrefix), request -> ServerResponse.ok().render(pathPrefix + "/index"));
+			builder.route(RequestPredicates.GET(pathPrefix), request -> ServerResponse.temporaryRedirect(URI.create(pathPrefix + "/index")).build());
 		}
 		return builder.build();
 	}
