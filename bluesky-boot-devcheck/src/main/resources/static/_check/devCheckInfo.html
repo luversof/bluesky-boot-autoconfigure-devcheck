@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>DevCheckInfo</title>
+<style>
+* { box-sizing: border-box; color: #494949;}
+body { margin: 0; padding: 0;}
+.devcheck-container { min-width: 800px; padding: 15px; }
+.devcheck-container a { text-decoration: none; }
+.devcheck-container a:hover { text-decoration: underline; color: #ff5f3c;}
+.devcheck-container h2 { margin: 0; padding: 10px 10px 20px 10px; font-size: 30px; letter-spacing: -1.2px; color: #1f1f1f; font-weight: normal;}
+.devcheck-container ul { width: 100%; margin: 0; padding: 0; list-style-type: none; display: table; font-size: 14px;}
+.devcheck-container li { margin: 0; padding: 10px; list-style-type: none; width: 100%; box-sizing: border-box; border-bottom: 1px solid #eaecef;}
+.devcheck-container .bean-name { display: table-cell; width: 300px;}
+.devcheck-container .url { display: table-cell ; padding: 0 0 0 20px;}
+.devcheck-container .thead { font-weight: bold; font-size: 18px; border-top: 5px solid #f4f5f7}
+.devcheck-container .devcheck-comment { display:block; font-size: 12px; color: #5fb8e3; letter-spacing: -.5px; }
+.devcheck-container div { padding: 15px;}
+.devcheck-search {
+  background: url('') no-repeat 10px 12px; /* Add a search icon to input */
+  background-size: 18px auto;
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+</style>
+<script>
+	function createDevCheckInfoElement(devCheckInfo) {
+		var beanName = devCheckInfo.beanName;
+		var description = devCheckInfo.description;
+		var urlList = devCheckInfo.urlList;
+		
+		var devCheckInfoElement = document.createElement("li");
+		devCheckInfoElement.className = "devcheck-info";
+		
+		var beanNameSpan = document.createElement("span");
+		beanNameSpan.className = "bean-name";
+		
+		beanNameSpan.append(document.createTextNode(beanName));
+		var descriptionSpan = document.createElement("span");
+		descriptionSpan.className = "devcheck-comment";
+		descriptionSpan.append(document.createTextNode(description === null ? "" : description));
+		beanNameSpan.append(descriptionSpan);
+		
+		devCheckInfoElement.appendChild(beanNameSpan)
+		
+		var urlSpan = document.createElement("span");
+		urlSpan.className = "url"
+		var a = document.createElement("a");
+		a.target = "_blank";
+		a.href = urlList[0]
+		a.append(document.createTextNode(urlList[0]));
+		urlSpan.append(a);
+		
+		devCheckInfoElement.appendChild(urlSpan);
+		
+		return devCheckInfoElement;
+		
+	}
+	
+	function displayDevCheckInfoList(devCheckInfoList){
+		devCheckInfoList.forEach(devCheckInfo => {
+			var devCheckInfoElement = createDevCheckInfoElement(devCheckInfo);
+			document.getElementById("devCheckInfoList").appendChild(devCheckInfoElement);
+		});
+	}
+	
+	function devCheckSearch() {
+		var searchValue = document.getElementById("devCheckSearchInput").value.toUpperCase();
+		var list = document.getElementsByClassName("devcheck-info");
+
+		for (const element of list) {
+			var a = element.getElementsByClassName("url")[0].getElementsByTagName("a")[0];
+			var targetValue = a.textContent || a.innerText;
+			if (targetValue.toUpperCase().indexOf(searchValue) > -1) {
+				element.style.display = "";
+			} else {
+				element.style.display = "none";
+			}
+		}
+	}
+	
+	function devCheckSearchWithHash() {
+		if (location.hash != "") {
+			document.getElementById("devCheckSearchInput").value = location.hash.substring(1);
+			devCheckSearch();
+		}
+	}
+	
+	window.onload = async function(){
+		var response = await fetch("devCheckInfoList", {
+			"method": "GET",
+			"headers": {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			}
+		});
+		
+		if (response.status !== 200) {
+			alert("devCheckInfo 목록 호출에 에러가 발생하였습니다.");
+			return;
+		}
+		
+		var devCheckInfoList = await response.json();
+		displayDevCheckInfoList(devCheckInfoList);
+		devCheckSearchWithHash();
+	};
+	
+	window.onhashchange = function() {
+		devCheckSearchWithHash();
+	}
+</script>
+</head>
+<body>
+<div class="devcheck-container">
+	<h2>DevCheckController List</h2>
+	
+	<div>
+		<a href="util">Go to Util static method List</a>
+	</div>
+	
+	
+	<input type="text" id="devCheckSearchInput" autofocus class="devcheck-search" onkeyup="devCheckSearch()" placeholder="Enter what you want to search for." />
+	
+	<ul id="devCheckInfoList">
+		<li class="thead">
+			<span class="bean-name">Controller</span>
+			<span class="url">Link</span>
+		</li>
+	</ul>
+</div>
+</body>
+</html>

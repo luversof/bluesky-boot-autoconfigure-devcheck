@@ -17,8 +17,7 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
 **Prerequisites**
 
 - [Java 17](https://openjdk.java.net/)
-- [Spring Boot 3.1.0](https://spring.io/)
-- [Thymleaf 3.1.1.RELEASE (optional)](https://www.thymeleaf.org/)
+- [Spring Boot 3.4.0](https://spring.io/)
 
 ## settings
 
@@ -29,7 +28,7 @@ If you are using Thymeleaf, the list is provided based on the Thymeleaf UI, othe
     <dependency>
         <groupId>io.github.luversof</groupId>
         <artifactId>bluesky-boot-autoconfigure-devcheck</artifactId>
-        <version>3.1.0</version>
+        <version>${currentVersion}</version>
     </dependency>
 </dependencies>
 ```
